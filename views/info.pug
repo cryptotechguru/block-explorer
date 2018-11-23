@@ -6,51 +6,47 @@ block content
       .panel-heading
         strong #{settings.locale.api_title}
       .panel-body
-        :markdown-it
-          *$(settings.locale.api_message)*
-          
-          ------
-
-          ### #{settings.locale.api_calls}
-          *Return data from coind*
-
-          * **getdifficulty**  
-            *#{settings.locale.api_getdifficulty}*  
-            [#{address}/api/getdifficulty](/api/getdifficulty)
-
-          * **getmempoolinfo**  
-            *#{settings.locale.api_getmempoolinfo}*  
-            [#{address}/api/getmempoolinfo](/api/getmempoolinfo)
-
-          * **getconnectioncount**  
-            *#{settings.locale.api_getconnectioncount}*  
-            [#{address}/api/getconnectioncount](/api/getconnectioncount) 
-
-          * **getblockcount**  
-            *#{settings.locale.api_getblockcount}*  
-            [#{address}/api/getblockcount](/api/getblockcount)
-
-          * **getblockhash [index]**  
-            *#{settings.locale.api_getblockhash}*  
-            [#{address}/api/getblockhash?index=#{hashes.blockindex}](/api/getblockhash?index=#{hashes.blockindex})
-
-          * **getblock [hash]**  
-            *#{settings.locale.api_getblock}*  
-            [#{address}/api/getblock?hash=#{hashes.blockhash}](/api/getblock?hash=#{hashes.blockhash})
-
-          * **getrawtransaction [txid] [decrypt]**  
-            *#{settings.locale.api_getrawtransaction}*  
-            [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0](/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0)  
-            [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1](/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1)
-
-
-        if settings.index.show_hashrate == true
-          :markdown-it
-            * **getnetworkhashps**  
-              *#{settings.locale.api_getnetworkhashps}*  
-              [#{address}/api/getnetworkhashps](/api/getnetworkhashps)
-
-
+        em #{settings.locale.api_message}
+        hr
+        h3 #{settings.locale.api_calls}
+        em Return data from coind
+        br
+        br
+        ul
+          li
+            strong getdifficulty <br/>
+            em #{settings.locale.api_getdifficulty} <br/>
+            a(href='/api/getdifficulty') #{address}/api/getdifficulty <br/><br/>
+          li
+            strong getmempoolinfo <br/>
+            em #{settings.locale.api_getmempoolinfo} <br/>
+            a(href='/api/getmempoolinfo') #{address}/api/getmempoolinfo <br/><br/>
+          li
+            strong getconnectioncount <br/>
+            em #{settings.locale.api_getconnectioncount} <br/>
+            a(href='/api/getconnectioncount') #{address}/api/getconnectioncount <br/><br/>
+          li
+            strong getblockcount <br/>
+            em #{settings.locale.api_getblockcount} <br/>
+            a(href='/api/getblockcount') #{address}/api/getblockcount <br/><br/>
+          li
+            strong getblockhash [index] <br/>
+            em #{settings.locale.api_getblockhash} <br/>
+            a(href=`/api/getblockhash?index=${hashes.blockindex}`) #{address}/api/getblockhash?index=#{hashes.blockindex} <br/><br/>
+          li
+            strong getblock [hash] <br/>
+            em #{settings.locale.api_getblock} <br/>
+            a(href=`/api/getblock?hash=${hashes.blockhash}`) #{address}/api/getblock?hash=#{hashes.blockhash} <br/><br/>
+          li
+            strong getrawtransaction [txid] [decrypt] <br/>
+            em #{settings.locale.api_getrawtransaction} <br/>
+            a(href=`/api/getrawtransaction?txid=${hashes.txhash}&decrypt=0`) #{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0 <br/>
+            a(href=`/api/getrawtransaction?txid=${hashes.txhash}&decrypt=1`) #{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1 <br/><br/>
+          if settings.index.show_hashrate == true
+            li
+              strong getnetworkhashps <br/>
+              em #{settings.locale.api_getnetworkhashps} <br/>
+              a(href='/api/getnetworkhashps') #{address}/api/getnetworkhashps
 
         if settings.heavy == true
           :markdown-it

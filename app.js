@@ -1,4 +1,4 @@
-var express = require('express')
+const express = require('express')
   , path = require('path')
   , bitcoinapi = require('bitcoin-node-api')
   , favicon = require('static-favicon')
@@ -12,7 +12,7 @@ var express = require('express')
   , locale = require('./lib/locale')
   , request = require('request');
 
-var app = express();
+let app = express();
 
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);
