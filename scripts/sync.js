@@ -58,23 +58,25 @@ if (process.argv[2] == 'index') {
   usage();
 }
 
-function create_lock(cb) {
-  if ( database == 'index' ) {
-    var fname = './tmp/' + database + '.pid';
-    fs.appendFile(fname, process.pid, function (err) {
-      if (err) {
-        console.log("Error: unable to create %s", fname);
-        process.exit(1);
-      } else {
-        return cb();
-      }
-    });
+/**
+ * Creates lock file in tmp directory. Only needed for indexing right now.
+ * @param {String} database name of database to create lock for
+ * @returns {Promise} resolves when file is written
+ */
+function create_lock(database) {
+  if (database === 'index') {
+    return fs.appendFile(`./tmp/${database}.pid`, process.pid)
   } else {
-    return cb();
+    return Promise.resolve(() => undefined)
   }
 }
 
-function remove_lock(cb) {
+/**
+ * Release lock on database. Only needed for indexing right now.
+ * @param {String} database name of database to remove lock of
+ * @returns {Promise} resolves when file is removed 
+ */
+function remove_lock(database) {
   if ( database == 'index' ) {
     var fname = './tmp/' + database + '.pid';
     fs.unlink(fname, function (err){
