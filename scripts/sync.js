@@ -66,9 +66,8 @@ if (process.argv[2] == 'index') {
 function create_lock(database) {
   if (database === 'index') {
     return fs.appendFile(`./tmp/${database}.pid`, process.pid)
-  } else {
-    return Promise.resolve(() => undefined)
   }
+  return Promise.resolve(() => undefined)
 }
 
 /**
@@ -78,43 +77,31 @@ function create_lock(database) {
  */
 function remove_lock(database) {
   if ( database == 'index' ) {
-    var fname = './tmp/' + database + '.pid';
-    fs.unlink(fname, function (err){
-      if(err) {
-        console.log("unable to remove lock: %s", fname);
-        process.exit(1);
-      } else {
-        return cb();
-      }
-    });
-  } else {
-    return cb();
-  }  
+    return fs.unlink(`./tmp/${database}.pid`)
+  }
+  return Promise.resolve(() => undefined)
 }
 
-function is_locked(cb) {
+/**
+ * Checks the lock on database. Only needed for indexing right now.
+ * @param {String} database name of database to check lock of
+ * @returns {Promise} resolves when check completes 
+ */
+function is_locked(database) {
   if ( database == 'index' ) {
-    var fname = './tmp/' + database + '.pid';
-    fs.exists(fname, function (exists){
-      if(exists) {
-        return cb(true);
-      } else {
-        return cb(false);
-      }
-    });
-  } else {
-    return cb();
-  } 
+    return fs.exists(`./tmp/${database}.pid`)
+  }
+  return Promise.resolve(() => undefined)
 }
 
 function exit() {
-  remove_lock(function(){
+  remove_lock(database).then(() => {
     mongoose.disconnect();
     process.exit(0);
   });
 }
 
-is_locked(function (exists) {
+is_locked.then((exists) => {
   if (exists) {
     console.log("Script already running..");
     process.exit(0);
