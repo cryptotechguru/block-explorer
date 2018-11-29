@@ -52,6 +52,15 @@ function parseArgs(args) {
 function createLock(database) {
   return new Promise((resolve, reject) => {
     if (database === 'index') {
+      
+      fs.exists('./tmp', exists => {
+        if (!exists) {
+          fs.mkdir('./tmp', (e) => {
+            if (e) reject(e)
+            fs.appendFile(`./tmp/${database}.pid`, process.pid, e => e ? reject(e) : resolve())
+          })
+        }
+      })
       fs.appendFile(`./tmp/${database}.pid`, process.pid, e => e ? reject(e) : resolve())
     }
     resolve()
