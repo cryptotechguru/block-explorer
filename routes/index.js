@@ -285,12 +285,12 @@ router.get('/ext/summary', function(req, res) {
   lib.get_difficulty(function(difficulty) {
     difficultyHybrid = ''
     if (difficulty['proof-of-work']) {
-            if (settings.index.difficulty == 'Hybrid') {
-              difficultyHybrid = 'POS: ' + difficulty['proof-of-stake'];
-              difficulty = 'POW: ' + difficulty['proof-of-work'];
-            } else if (settings.index.difficulty == 'POW') {
-              difficulty = difficulty['proof-of-work'];
-            } else {
+      if (settings.index.difficulty == 'Hybrid') {
+        difficultyHybrid = 'POS: ' + difficulty['proof-of-stake'];
+        difficulty = 'POW: ' + difficulty['proof-of-work'];
+      } else if (settings.index.difficulty == 'POW') {
+        difficulty = difficulty['proof-of-work'];
+      } else {
         difficulty = difficulty['proof-of-stake'];
       }
     }
