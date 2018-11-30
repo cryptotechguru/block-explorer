@@ -1,18 +1,29 @@
-var express = require('express')
-  , path = require('path')
-  , bitcoinapi = require('bitcoin-node-api')
-  , favicon = require('static-favicon')
-  , logger = require('morgan')
-  , cookieParser = require('cookie-parser')
-  , bodyParser = require('body-parser')
-  , settings = require('./lib/settings')
-  , routes = require('./routes/index')
-  , lib = require('./lib/explorer')
-  , db = require('./lib/database')
-  , locale = require('./lib/locale')
-  , request = require('request');
+const express = require('express'),
+  path = require('path'),
+  bitcoinapi = require('bitcoin-node-api'),
+  favicon = require('static-favicon'),
+  logger = require('morgan'),
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser'),
+  settings = require('./lib/settings'),
+  routes = require('./routes/index'),
+  lib = require('./lib/explorer'),
+  db = require('./lib/database'),
+  locale = require('./lib/locale'),
+  { spawnCmd } = require('./lib/util')
 
-var app = express();
+const app = express();
+
+// set database update intervals
+setInterval(async () => {
+  await spawnCmd('/usr/bin/nodejs', [ 'scripts/sync.js', 'index', 'update' ])
+}, settings.sync_timeout)
+setInterval(async () => {
+  await spawnCmd('/usr/bin/nodejs', [ 'scripts/sync.js', 'market' ])
+}, settings.market_timeout)
+setInterval(async () => {
+  await spawnCmd('usr/bin/nodejs', [ 'scripts/peers.js' ])
+}, settings.peer_timeout)
 
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);

@@ -20,6 +20,9 @@
   "port": "3001",
   "update_timeout": 10,
   "check_timeout": 250,
+  "sync_timeout": 60000,
+  "market_timeout": 120000,
+  "peer_timeout": 240000,
   "confirmations": 40,
   "locale": "locale/en.json",
   "display": {
