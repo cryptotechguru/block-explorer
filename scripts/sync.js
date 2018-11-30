@@ -5,6 +5,7 @@ const mongoose = require('mongoose'),
   Richlist = require('../models/richlist'),
   Stats = require('../models/stats'),
   settings = require('../lib/settings'),
+  { promisify } = require('../lib/util'),
   fs = require('fs'),
   debug = require('debug')
 
@@ -127,74 +128,79 @@ isLocked(database).then(exists => {
   return mongoose.connect(settings.dbsettings.uri, settings.dbsettings.options)
 }).then(() => {
   if (database === 'index') {
-    db.check_stats(settings.coin, exists => {
+    return promisify(db.check_stats, settings.coin).then(exists => {
       // check if database has been created yet
       if (!exists) {
         debug('Run \'npm start\' to create database structure before running this script.')
         exit(database)
       }
-      db.update_db(settings.coin, () => {
-        db.get_stats(settings.coin, stats => {
-          if (settings.heavy) db.update_heavy(settings.coin, stats.count, 20)
-          if (mode === 'reindex') {
-            Tx.remove({}, err => {
-              Address.remove({}, err2 => {
-                Richlist.update({ coin: settings.coin }, { received: [], balance: [] }, err3 => {
-                  Stats.update({ coin: settings.coin }, { last: 0 }, () => debug('index cleared (reindex)'))
-                  db.update_tx_db(settings.coin, 1, stats.count, settings.update_timeout, () => {
-                    db.update_richlist('received', () => {
-                      db.update_richlist('balance', () => {
-                        db.get_stats(settings.coin, nstats => {
-                          debug(`reindex complete (block: ${nstats.last})`)
-                          exit(database)
-                        })
-                      })
-                    })
-                  })
-                })
-              })
-            })
-          } else if (mode === 'check') {
-            db.update_tx_db(settingscoin, 1, stats.count, settings.check_timeout, () => {
-              db.get_stats(settings.coin, nstats => {
-                debug(`check complete (block: ${nstats.last})`)
-                exit(database)
-              })
-            })
-          } else if (mode === 'update') {
-            db.update_tx_db(settings.coin, stats.last, stats.count, settings.update_timeout, () => {
-              db.update_richlist('received', () => {
-                db.update_richlist('balance', () => {
-                  db.get_stats(settings.coin, nstats => {
-                    debug(`update complete (block: ${nstats.last})`)
-                    exit(database)
-                  })
-                })
-              })
-            })
-          }
+      return promisify(db.update_db, settings.coin)
+    }).then(() =>
+      promisify(db.get_stats, settings.coin)
+    ).then(stats => Promise.all([
+      stats,
+      settings.heavy ? promisify(db.update_heavy, settings.coin, stats.count, 20) : undefined
+    ])).then(([ stats ]) => {
+      if (mode === 'reindex') {
+        return promisify(Tx.remove.bind(Tx), {}).then(err =>
+          promisify(Address.remove.bind(Address), {})
+        ).then(err =>
+          promisify(Richlist.update.bind(Richlist), { coin: settings.coin }, { received: [], balance: [] })
+        ).then(err =>
+          promisify(Stats.update.bind(Stats), { coin: settings.coin }, { last: 0 })
+        ).then(() => {
+          debug('index cleared (reindex)')
+          return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.update_timeout)
+        }).then(() =>
+          promisify(db.update_richlist, 'received')
+        ).then(() =>
+          promisify(db.update_richlist, 'balance')
+        ).then(() =>
+          promisify(db.get_stats, settings.coin)
+        ).then(nstats => {
+          debug(`reindex complete (block: ${nstats.last})`)
+          exit(database)
         })
-      })
+      } else if (mode === 'check') {
+        return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.check_timeout).then(() =>
+          promisify(db.get_stats, settings.coin)
+        ).then(nstats => {
+          debug(`check complete (block: ${nstats.last})`)
+          exit(database)
+        })
+      } else if (mode === 'update') {
+        return promisify(db.update_tx_db, settings.coin, stats.last, stats.count, settings.update_timeout).then(() =>
+          promisify(db.update_richlist, 'received')
+        ).then(() =>
+          promisify(db.update_richlist, 'balance')
+        ).then(() =>
+          promisify(db.get_stats, settings.coin)
+        ).then(nstats => {
+          debug(`update complete (block: ${nstats.last})`)
+          exit(database)
+        })
+      }
     })
   } else {
-    settings.markets.enabled.reduce((complete, m) => {
-      return db.check_market(m, (m, exists) => {
+    return settings.markets.enabled.reduce(async (complete, m) => {
+      return await promisify(db.check_market, m).then((m, exists) => {
         complete++
         if (exists) {
-          db.update_markets_db(m, err => {
+          return promisify(db.update_markets_db, m).then(err => {
             if (err) debug(`${m}: ${err}`)
             else debug(`${m} market data updated successfully.`)
             if (complete === markets.length) exit()
+            return complete
           })
-        } else {
-          debug(`Error: entry for ${m} does not exist in markets db.`)
-          if (complete === markets.length) exit()
         }
+        debug(`Error: entry for ${m} does not exist in markets db.`)
+        if (complete === markets.length) exit()
         return complete
       })
     }, 0)
   }
 }).catch(err => {
+  console.log(err)
   console.log(`Unable to connect to database: ${settings.dbsettings.uri}.`)
   console.log(`With options: ${JSON.stringify(settings.dbsettings.options, null, 2)}`)
   console.log('Aborting')
