@@ -14,6 +14,9 @@ var express = require('express')
 
 var app = express();
 
+const info = require('./info');
+info(app)
+
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);
 if (settings.heavy != true) {
