@@ -51,21 +51,20 @@ function parseArgs(args) {
  * @returns {Promise} resolves when file is written
  */
 function createLock(database) {
-  return new Promise((resolve, reject) => {
-    if (database === 'index') {
-      
-      fs.exists('./tmp', exists => {
-        if (!exists) {
-          fs.mkdir('./tmp', (e) => {
-            if (e) reject(e)
-            fs.appendFile(`./tmp/${database}.pid`, process.pid, e => e ? reject(e) : resolve())
-          })
-        }
-      })
-      fs.appendFile(`./tmp/${database}.pid`, process.pid, e => e ? reject(e) : resolve())
-    }
-    resolve()
-  })
+  if (database === 'index') {
+    return promisify(fs.stat, './tmp').then((e, s) => {
+      if (e && !s) {
+        return promisify(fs.mkdir, './tmp').then(e => {
+          if (e) return Promise.reject(e)
+          return promisify(fs.appendFile, `./tmp/${database}.pid`, process.pid)
+            .then(e => e ? Promise.reject(e) : Promise.resolve())
+        })
+      }
+      return promisify(fs.appendFile, `./tmp/${database}.pid`, process.pid)
+        .then(e => e ? Promise.reject(e) : Promise.resolve())
+    })
+  }
+  Promise.resolve()
 }
 
 /**
@@ -74,12 +73,11 @@ function createLock(database) {
  * @returns {Promise} resolves when file is removed 
  */
 function removeLock(database) {
-  return new Promise((resolve, reject) => {
-    if (database === 'index') {
-      fs.unlink(`./tmp/${database}.pid`, e => e ? reject(e) : resolve())
-    }
-    resolve()
-  })
+  if (database === 'index') {
+    return promisify(fs.unlink, `./tmp/${database}.pid`)
+      .then(e => e ? Promise.reject(e) : Promise.resolve())
+  }
+  return Promise.resolve()
 }
 
 /**
@@ -88,12 +86,10 @@ function removeLock(database) {
  * @returns {Promise} resolves when check completes 
  */
 function isLocked(database) {
-  return new Promise((resolve, reject) => {
-    if (database === 'index') {
-      fs.exists(`./tmp/${database}.pid`, e => resolve(e))
-    }
-    resolve()
-  })
+  if (database === 'index')
+    return promisify(fs.stat, `./tmp/${database}.pid`)
+      .then((e, s) => !e && s)
+  return Promise.resolve()
 }
 
 /**
