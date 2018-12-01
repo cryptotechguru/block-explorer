@@ -15,14 +15,15 @@ const express = require('express'),
 const app = express();
 
 // set database update intervals
+spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
 setInterval(function () {
-  spawnCmd('/usr/bin/nodejs', [ 'scripts/sync.js', 'index', 'update' ])
+  spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
 }, settings.sync_timeout)
 setInterval(function () {
-  spawnCmd('/usr/bin/nodejs', [ 'scripts/sync.js', 'market' ])
+  spawnCmd('node', [ 'scripts/sync.js', 'market' ])
 }, settings.market_timeout)
 setInterval(function () {
-  spawnCmd('usr/bin/nodejs', [ 'scripts/peers.js' ])
+  spawnCmd('node', [ 'scripts/peers.js' ])
 }, settings.peer_timeout)
 
 const info = require('./info');
