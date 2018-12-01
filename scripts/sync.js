@@ -40,7 +40,10 @@ function usage() {
  * @returns {Object} database to run on and mode to run in
  */
 function parseArgs(args) {
-  if (args.length < 2 || validDbs.indexOf(args[0]) < 0 || validModes.indexOf(args[1]) < 0) usage()
+  console.log(`args::`, args)
+  if (args.length < 1 || validDbs.indexOf(args[0]) < 0 || (args.length === 2 && validModes.indexOf(args[1]) < 0)) {
+    usage()
+  }
   // if we're running on markets, then the only valid mode is to 'update'.
   return { database: args[0], mode: args[0] === 'market' ? 'update' : args[1] }
 }
@@ -64,7 +67,7 @@ function createLock(database) {
         .then(e => e ? Promise.reject(e) : Promise.resolve())
     })
   }
-  Promise.resolve()
+  return Promise.resolve()
 }
 
 /**
@@ -108,6 +111,7 @@ function exit(database) {
 ////////  MAIN ENTRYPOINT ////////
 
 const { database, mode } = parseArgs(process.argv.slice(2))
+console.log(`- database=${database}, mode=${mode}`)
 isLocked(database).then(exists => {
   // if there's a lock file, exit
   if (exists) {
@@ -178,8 +182,9 @@ isLocked(database).then(exists => {
       }
     })
   } else {
-    return settings.markets.enabled.reduce(async (complete, m) => {
-      return await promisify(db.check_market, m).then((m, exists) => {
+    const markets = settings.markets.enabled;
+    return markets.reduce(function(complete, m) {
+      return promisify(db.check_market, m).then((m, exists) => {
         complete++
         if (exists) {
           return promisify(db.update_markets_db, m).then(err => {
