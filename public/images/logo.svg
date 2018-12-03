@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 317 317" style="enable-background:new 0 0 317 317;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#BD1B21;}
+	.st1{fill:#D71D28;}
+	.st2{fill:#EE303C;}
+	.st3{clip-path:url(#SVGID_2_);}
+	.st4{fill:#FFFFFF;}
+	.st5{clip-path:url(#SVGID_4_);}
+</style>
+<g>
+	<polygon class="st0" points="158.5,158.5 117.4,134.8 117.4,182.2 158.5,205.9 158.5,158.5 	"/>
+	<polygon class="st1" points="158.5,158.5 199.6,134.8 158.5,111.1 117.4,134.8 	"/>
+	<polygon class="st2" points="158.5,205.9 199.6,182.2 199.6,134.8 158.5,158.5 	"/>
+	<path class="st2" d="M151.6,154.5"/>
+	<g>
+		<g>
+			<defs>
+				<path id="SVGID_1_" d="M158.5,190.1l27.4-15.8v-15.8l-27.4,15.8 M144.8,158.5"/>
+			</defs>
+			<use xlink:href="#SVGID_1_"  style="overflow:visible;fill:#FFFFFF;"/>
+			<clipPath id="SVGID_2_">
+				<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+			</clipPath>
+			<g class="st3">
+				<path class="st4" d="M117.4,182.2"/>
+				<line class="st4" x1="158.5" y1="158.5" x2="158.5" y2="205.9"/>
+				<line class="st4" x1="117.4" y1="182.2" x2="117.4" y2="134.8"/>
+				<path class="st4" d="M158.5,158.5"/>
+			</g>
+		</g>
+		<polygon class="st4" points="158.5,158.5 151.7,154.5 144.8,158.5 144.8,150.6 131.1,142.7 131.1,174.3 158.5,190.1 158.5,174.3 
+			151.6,170.4 158.5,166.4 		"/>
+		<g>
+			<line class="st4" x1="144.8" y1="150.6" x2="144.8" y2="150.6"/>
+			<polygon class="st4" points="185.9,142.7 158.5,126.9 131.1,142.7 144.8,150.6 158.5,142.7 165.3,146.7 151.7,154.5 158.5,158.5 
+							"/>
+		</g>
+		<g>
+			<defs>
+				<path id="SVGID_3_" d="M158.5,158.5l0,7.9l27.4-15.8l0-7.9L158.5,158.5z"/>
+			</defs>
+			<use xlink:href="#SVGID_3_"  style="overflow:visible;fill:#FFFFFF;"/>
+			<clipPath id="SVGID_4_">
+				<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
+			</clipPath>
+			<g class="st5">
+				<polygon class="st4" points="158.5,158.5 158.5,205.9 117.4,182.2 				"/>
+				<polygon class="st4" points="117.4,182.2 117.4,134.8 158.5,158.5 				"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

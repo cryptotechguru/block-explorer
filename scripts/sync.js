@@ -103,7 +103,7 @@ function exit(database) {
     .then(() => mongoose.disconnect())
     .then(() => process.exit(0))
     .catch(err => {
-      debug('Failed to remove lock or disconnect from mongoose cleanly.')
+      console.log('Failed to remove lock or disconnect from mongoose cleanly.')
       process.exit(1)
     })
 }
@@ -115,23 +115,24 @@ console.log(`- database=${database}, mode=${mode}`)
 isLocked(database).then(exists => {
   // if there's a lock file, exit
   if (exists) {
-    debug('Script already running.')
+    console.log('Script already running.')
     process.exit()
   }
 }).then(() =>
   createLock(database).catch(e => {
-    debug('Error: unable to create lock file.')
+    console.log('Error: unable to create lock file.')
     process.exit(1)
   })
 ).then(() => {
-  debug('Script launched with pid: ' + process.pid)
+  console.log('Script launched with pid: ' + process.pid)
   return mongoose.connect(settings.dbsettings.uri, settings.dbsettings.options)
 }).then(() => {
   if (database === 'index') {
-    return promisify(db.check_stats, settings.coin).then(exists => {
+    return promisify(db.get_stats, settings.coin).then(stats => console.log(`\n\n${JSON.stringify(stats, null, 2)}\n\n`))
+      .then(() => promisify(db.check_stats, settings.coin)).then(exists => {
       // check if database has been created yet
       if (!exists) {
-        debug('Run \'npm start\' to create database structure before running this script.')
+        console.log('Run \'npm start\' to create database structure before running this script.')
         exit(database)
       }
       return promisify(db.update_db, settings.coin)
@@ -141,6 +142,7 @@ isLocked(database).then(exists => {
       stats,
       settings.heavy ? promisify(db.update_heavy, settings.coin, stats.count, 20) : undefined
     ])).then(([ stats ]) => {
+      console.log(`\n\n${stats.count}\n\n`)
       if (mode === 'reindex') {
         return promisify(Tx.remove.bind(Tx), {}).then(err =>
           promisify(Address.remove.bind(Address), {})
@@ -149,7 +151,7 @@ isLocked(database).then(exists => {
         ).then(err =>
           promisify(Stats.update.bind(Stats), { coin: settings.coin }, { last: 0 })
         ).then(() => {
-          debug('index cleared (reindex)')
+          console.log('index cleared (reindex)')
           return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.update_timeout)
         }).then(() =>
           promisify(db.update_richlist, 'received')
@@ -158,14 +160,14 @@ isLocked(database).then(exists => {
         ).then(() =>
           promisify(db.get_stats, settings.coin)
         ).then(nstats => {
-          debug(`reindex complete (block: ${nstats.last})`)
+          console.log(`reindex complete (block: ${nstats.last})`)
           exit(database)
         })
       } else if (mode === 'check') {
         return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.check_timeout).then(() =>
           promisify(db.get_stats, settings.coin)
         ).then(nstats => {
-          debug(`check complete (block: ${nstats.last})`)
+          console.log(`check complete (block: ${nstats.last})`)
           exit(database)
         })
       } else if (mode === 'update') {
@@ -176,25 +178,24 @@ isLocked(database).then(exists => {
         ).then(() =>
           promisify(db.get_stats, settings.coin)
         ).then(nstats => {
-          debug(`update complete (block: ${nstats.last})`)
+          console.log(`update complete (block: ${nstats.last})`)
           exit(database)
         })
       }
     })
   } else {
-    const markets = settings.markets.enabled;
-    return markets.reduce(function(complete, m) {
+    return markets.reduce((complete, m, _, markets) => {
       return promisify(db.check_market, m).then((m, exists) => {
         complete++
         if (exists) {
           return promisify(db.update_markets_db, m).then(err => {
-            if (err) debug(`${m}: ${err}`)
-            else debug(`${m} market data updated successfully.`)
+            if (err) console.log(`${m}: ${err}`)
+            else console.log(`${m} market data updated successfully.`)
             if (complete === markets.length) exit()
             return complete
           })
         }
-        debug(`Error: entry for ${m} does not exist in markets db.`)
+        console.log(`Error: entry for ${m} does not exist in markets db.`)
         if (complete === markets.length) exit()
         return complete
       })

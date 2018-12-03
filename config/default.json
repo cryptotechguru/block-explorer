@@ -14,7 +14,7 @@
   "address": "127.0.0.1:3001",
   "coin": "Equibit",
   "symbol": "EQB",
-  "logo": "/images/logo.png",
+  "logo": "/images/logo.svg",
   "favicon": "public/favicon.ico",
   "theme": "Darkly",
   "port": "3001",

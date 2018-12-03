@@ -1,37 +1,47 @@
-var cluster = require('cluster');
-var fs = require('fs');
+const debug = require('debug')('explorer')
+const cluster = require('cluster')
+const fs = require('fs')
+const settings = require('../lib/settings')
+const db = require('../lib/database')
+const { prettyPrint } = require('../lib/util')
 
 if (cluster.isMaster) {
   fs.writeFile('./tmp/cluster.pid', process.pid, function (err) {
     if (err) {
-      console.log('Error: unable to create cluster.pid');
-      process.exit(1);
+      debug('Error: unable to create cluster.pid')
+      process.exit(1)
     } else {
-      console.log('Starting cluster with pid: ' + process.pid);    
-      //ensure workers exit cleanly 
-      process.on('SIGINT', function() {
-        console.log('Cluster shutting down..');
-        for (var id in cluster.workers) {
-          cluster.workers[id].kill();
+      debug('Starting cluster with pid: ' + process.pid)
+      // ensure workers exit cleanly
+      process.on('SIGINT', () => {
+        debug('Cluster shutting down...')
+        for (let worker of cluster.workers) {
+          worker.kill()
         }
         // exit the master process
-        process.exit(0);
-      });
+        process.exit(0)
+      })
 
-      // Count the machine's CPUs
-      var cpuCount = require('os').cpus().length;
-
-      // Create a worker for each CPU
-      for (var i = 0; i < cpuCount; i += 1) {
-        cluster.fork();
-      }
+      // ensure workers have a valid schema to serve before spawning them
+      db.connect(settings.dbsettings).then(() =>
+        db.setupSchema()
+      ).then(() => {
+        // spawn a worker for each cpu core
+        require('os').cpus().forEach(_ => {
+          cluster.fork()
+        })
+      }).catch(err => {
+        debug(`An error occured setting up cluster: ${prettyPrint(err)}`)
+        debug('Aborting...')
+        process.exit(1)
+      })
 
       // Listen for dying workers
-      cluster.on('exit', function () {
-        cluster.fork();
-      });
+      cluster.on('exit', () => {
+        cluster.fork()
+      })
     }
-  });
+  })
 } else {
-  require('./instance');
+  require('./instance')
 }
