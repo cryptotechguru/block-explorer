@@ -15,7 +15,7 @@ if (cluster.isMaster) {
       // ensure workers exit cleanly
       process.on('SIGINT', () => {
         debug('Cluster shutting down...')
-        for (let worker of cluster.workers) {
+        for (let worker of Object.values(cluster.workers)) {
           worker.kill()
         }
         // exit the master process

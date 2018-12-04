@@ -15,16 +15,16 @@ const express = require('express'),
 const app = express();
 
 // set database update intervals
-// spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
-// setInterval(function () {
-//   spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
-// }, settings.sync_timeout)
-// setInterval(function () {
-//   spawnCmd('node', [ 'scripts/sync.js', 'market' ])
-// }, settings.market_timeout)
-// setInterval(function () {
-//   spawnCmd('node', [ 'scripts/peers.js' ])
-// }, settings.peer_timeout)
+spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
+setInterval(function () {
+  spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
+}, settings.sync_timeout)
+setInterval(function () {
+  spawnCmd('node', [ 'scripts/sync.js', 'market' ])
+}, settings.market_timeout)
+setInterval(function () {
+  spawnCmd('node', [ 'scripts/peers.js' ])
+}, settings.peer_timeout)
 
 const info = require('./info');
 info(app)
