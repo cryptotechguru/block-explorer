@@ -5,9 +5,9 @@ const mongoose = require('mongoose'),
   Richlist = require('../models/richlist'),
   Stats = require('../models/stats'),
   settings = require('../lib/settings'),
-  { promisify } = require('../lib/util'),
+  { promisify, prettyPrint } = require('../lib/util'),
   fs = require('fs'),
-  debug = require('debug')
+  debug = require('debug')('explorer:sync')
 
 const validDbs = [ 'index', 'market' ]
 const validModes = [ 'update', 'check', 'reindex' ]
@@ -40,7 +40,7 @@ function usage() {
  * @returns {Object} database to run on and mode to run in
  */
 function parseArgs(args) {
-  console.log(`args::`, args)
+  debug(`args::`, args)
   if (args.length < 1 || validDbs.indexOf(args[0]) < 0 || (args.length === 2 && validModes.indexOf(args[1]) < 0)) {
     usage()
   }
@@ -55,7 +55,7 @@ function parseArgs(args) {
  */
 function createLock(database) {
   if (database === 'index') {
-    return promisify(fs.stat, './tmp').then((e, s) => {
+    return promisify(fs.stat, './tmp').then(([ e, s ]) => {
       if (e && !s) {
         return promisify(fs.mkdir, './tmp').then(e => {
           if (e) return Promise.reject(e)
@@ -91,7 +91,9 @@ function removeLock(database) {
 function isLocked(database) {
   if (database === 'index')
     return promisify(fs.stat, `./tmp/${database}.pid`)
-      .then((e, s) => !e && s)
+      // this pertains to the special case documented with promisify (fs.stat calls the
+      // callback with [null, Object] if found, and just Error if it doesn't)
+      .then(es => es instanceof Array)
   return Promise.resolve()
 }
 
@@ -111,99 +113,107 @@ function exit(database) {
 ////////  MAIN ENTRYPOINT ////////
 
 const { database, mode } = parseArgs(process.argv.slice(2))
-console.log(`- database=${database}, mode=${mode}`)
-isLocked(database).then(exists => {
-  // if there's a lock file, exit
-  if (exists) {
-    debug('Script already running.')
-    process.exit()
-  }
-}).then(() =>
-  createLock(database).catch(e => {
-    debug('Error: unable to create lock file.')
-    process.exit(1)
-  })
-).then(() => {
-  debug('Script launched with pid: ' + process.pid)
-  return mongoose.connect(settings.dbsettings.uri, settings.dbsettings.options)
-}).then(() => {
-  if (database === 'index') {
-    return promisify(db.check_stats, settings.coin).then(exists => {
-      // check if database has been created yet
-      if (!exists) {
-        debug('Run \'npm start\' to create database structure before running this script.')
-        exit(database)
-      }
-      return promisify(db.update_db, settings.coin)
-    }).then(() =>
-      promisify(db.get_stats, settings.coin)
-    ).then(stats => Promise.all([
-      stats,
-      settings.heavy ? promisify(db.update_heavy, settings.coin, stats.count, 20) : undefined
-    ])).then(([ stats ]) => {
-      if (mode === 'reindex') {
-        return promisify(Tx.remove.bind(Tx), {}).then(err =>
-          promisify(Address.remove.bind(Address), {})
-        ).then(err =>
-          promisify(Richlist.update.bind(Richlist), { coin: settings.coin }, { received: [], balance: [] })
-        ).then(err =>
-          promisify(Stats.update.bind(Stats), { coin: settings.coin }, { last: 0 })
-        ).then(() => {
-          debug('index cleared (reindex)')
-          return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.update_timeout)
-        }).then(() =>
-          promisify(db.update_richlist, 'received')
-        ).then(() =>
-          promisify(db.update_richlist, 'balance')
-        ).then(() =>
-          promisify(db.get_stats, settings.coin)
-        ).then(nstats => {
-          debug(`reindex complete (block: ${nstats.last})`)
-          exit(database)
-        })
-      } else if (mode === 'check') {
-        return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.check_timeout).then(() =>
-          promisify(db.get_stats, settings.coin)
-        ).then(nstats => {
-          debug(`check complete (block: ${nstats.last})`)
-          exit(database)
-        })
-      } else if (mode === 'update') {
-        return promisify(db.update_tx_db, settings.coin, stats.last, stats.count, settings.update_timeout).then(() =>
-          promisify(db.update_richlist, 'received')
-        ).then(() =>
-          promisify(db.update_richlist, 'balance')
-        ).then(() =>
-          promisify(db.get_stats, settings.coin)
-        ).then(nstats => {
-          debug(`update complete (block: ${nstats.last})`)
-          exit(database)
-        })
-      }
+function main() {
+  debug(`- database=${database}, mode=${mode}`)
+  isLocked(database).then(exists => {
+    // if there's a lock file, exit
+    if (exists) {
+      debug('Script already running.')
+      process.exit()
+    }
+  }).then(() =>
+    createLock(database).catch(e => {
+      debug('Error: unable to create lock file.')
+      process.exit(1)
     })
-  } else {
-    const markets = settings.markets.enabled;
-    return markets.reduce(function(complete, m) {
-      return promisify(db.check_market, m).then((m, exists) => {
-        complete++
-        if (exists) {
-          return promisify(db.update_markets_db, m).then(err => {
-            if (err) debug(`${m}: ${err}`)
-            else debug(`${m} market data updated successfully.`)
-            if (complete === markets.length) exit()
-            return complete
+  ).then(() => {
+    debug('Script launched with pid: ' + process.pid)
+    return mongoose.connect(settings.dbsettings.uri, settings.dbsettings.options)
+  }).then(() => {
+    if (database === 'index') {
+      return promisify(db.get_stats, settings.coin).then(() =>
+        promisify(db.check_stats, settings.coin)
+      ).then(exists => {
+        if (!exists) {
+          debug('Run \'npm start\' to create database structure before running this script.')
+          exit(database)
+        }
+        return promisify(db.get_stats, settings.coin)
+      }).then(stats => {
+        if (mode === 'reindex') {
+          return promisify(Tx.remove.bind(Tx), {}).then(err =>
+            promisify(Address.remove.bind(Address), {})
+          ).then(err =>
+            promisify(Richlist.update.bind(Richlist), { coin: settings.coin }, { received: [], balance: [] })
+          ).then(err =>
+            promisify(Stats.update.bind(Stats), { coin: settings.coin }, { last: 0 })
+          ).then(() => {
+            debug(`\n\n${stats.count}\n\n`)
+            debug('index cleared (reindex)')
+            return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.update_timeout)
+          }).then(() =>
+            promisify(db.update_richlist, 'received')
+          ).then(() =>
+            promisify(db.update_richlist, 'balance')
+          ).then(() =>
+            promisify(db.get_stats, settings.coin)
+          ).then(nstats => {
+            debug(`reindex complete (block: ${nstats.last})`)
+          })
+        } else if (mode === 'check') {
+          return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.check_timeout).then(() =>
+            promisify(db.get_stats, settings.coin)
+          ).then(nstats => {
+            debug(`check complete (block: ${nstats.last})`)
+          })
+        } else if (mode === 'update') {
+          return promisify(db.update_tx_db, settings.coin, stats.last, stats.count, settings.update_timeout).then(() =>
+            promisify(db.update_richlist, 'received')
+          ).then(() =>
+            promisify(db.update_richlist, 'balance')
+          ).then(() =>
+            promisify(db.get_stats, settings.coin)
+          ).then(nstats => {
+            debug(`update complete (block: ${nstats.last})`)
           })
         }
-        debug(`Error: entry for ${m} does not exist in markets db.`)
-        if (complete === markets.length) exit()
-        return complete
-      })
-    }, 0)
-  }
-}).catch(err => {
-  console.log(err)
-  console.log(`Unable to connect to database: ${settings.dbsettings.uri}.`)
-  console.log(`With options: ${JSON.stringify(settings.dbsettings.options, null, 2)}`)
-  console.log('Aborting')
-  return exit(database)
-})
+      }).then(() =>
+        promisify(db.update_db, settings.coin)
+      ).then(() =>
+        promisify(db.get_stats, settings.coin)
+      ).then(stats => {
+        if (settings.heavy) return promisify(db.update_heavy, settings.coin, stats.count, 20)
+      }).then(() => exit(database))
+    } else {
+      return settings.markets.enabled.reduce((complete, m, _, markets) => {
+        return promisify(db.check_market, m).then(([m, exists]) => {
+          complete++
+          if (exists) {
+            return promisify(db.update_markets_db, m).then(err => {
+              if (err) debug(`${m}: ${err}`)
+              else debug(`${m} market data updated successfully.`)
+              if (complete === markets.length) exit()
+              return complete
+            })
+          }
+          debug(`Error: entry for ${m} does not exist in markets db.`)
+          if (complete === markets.length) exit()
+          return complete
+        })
+      }, 0)
+    }
+  }).catch(err => {
+    console.log(err)
+    console.log(`Unable to connect to database: ${settings.dbsettings.uri}.`)
+    console.log(`With options: ${prettyPrint(settings.dbsettings.options, null, 2)}`)
+    console.log('Aborting')
+    return exit(database)
+  })
+}
+
+try {
+  main()
+} catch (err) {
+  console.log(`An error occurred: ${prettyPrint(err)}`)
+  exit(database)
+}

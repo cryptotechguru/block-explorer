@@ -25,41 +25,42 @@ An open source block explorer written in node.js.
 *  mongodb 2.6.x
 *  *coind
 
-### Create database
-
-Enter MongoDB cli:
-
-    $ mongo
-
-Create databse:
-
-    > use explorerdb
-
-Create user with read/write access:
-
-    > db.createUser( { user: "iquidus", pwd: "3xp!0reR", roles: [ "readWrite" ] } )
-
-*note: If you're using mongo shell 2.4.x, use the following to create your user:
-
-    > db.addUser( { user: "username", pwd: "password", roles: [ "readWrite"] })
-
 ### Get the source
 
-    git clone https://github.com/iquidus/explorer explorer
+    git clone https://github.com/equibit/explorer
 
 ### Install node modules
 
-    cd explorer && npm install --production
+    cd explorer && npm install
 
 ### Configure
 
-    cp ./settings.json.template ./settings.json
+Set the following environment variables:
 
-*Make required changes in settings.json*
+    $ export MONGO_DB_URI='mongodb://iquidus:3xp!0reR@localhost:27017/explorerdb'
+    $ export EQUIBIT_CORE_URL=ip-or-domain-of-node:PORT
+    $ export EQUIBIT_CORE_USERNAME=username_of_node
+    $ export EQUIBIT_CORE_PASSWORD=password_of_node
+
+To run in debug mode set the DEBUG environment variable to anything (e.g. `DEBUG=*`).
+
+### Setup Mongo
+
+Ensure the user specified in the `MONGO_DB_URI` has read/write permissions. If needed, you can manually create the database and the user:
+
+    $ mongo
+    > use explorerdb
+    > db.createUser( { user: "iquidus", pwd: "3xp!0reR", roles: [ "readWrite" ] } )
+
+Otherwise the explorer will attempt to login with the specified user and create the database automatically.
 
 ### Start Explorer
 
     npm start
+
+### Visit Explorer
+
+Visit `http://localhost:3001` in your browser to see the explorer in action.
 
 *note: mongod must be running to start the explorer*
 
@@ -73,7 +74,14 @@ To stop the cluster you can use
 
 ### Syncing databases with the blockchain
 
-sync.js (located in scripts/) is used for updating the local databases. This script must be called from the explorers root directory.
+The explorer automatically syncs with the blockchain on configurable intervals which can be set by modifying the following variables in default.json (in milliseconds):
+
+    "sync_timeout": 60000, // sync the database with the blockchain (includes addresses, transactions, blocks, etc)
+    "market_timeout": 120000, // sync the database with enabled markets
+    "peer_timeout": 240000, // checks peer connections and records in the database
+
+These scripts can also be called manually.
+scripts/sync.js must be called from the explorer's root directory.
 
     Usage: node scripts/sync.js [database] [mode]
 
@@ -92,16 +100,9 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
     * If check mode finds missing data(ignoring new data since last sync),
       index_timeout in settings.json is set too low.
 
+scripts/peers.js must be called from the explorer's root directory.
 
-*It is recommended to have this script launched via a cronjob at 1+ min intervals.*
-
-**crontab**
-
-*Example crontab; update index every minute and market data every 2 minutes*
-
-    */1 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/sync.js index update > /dev/null 2>&1
-    */2 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/sync.js market > /dev/null 2>&1
-    */5 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/peers.js > /dev/null 2>&1
+    Usage: node scripts/peers.js
 
 ### Wallet
 

@@ -14,7 +14,7 @@
   "address": "127.0.0.1:3001",
   "coin": "Equibit",
   "symbol": "EQB",
-  "logo": "/images/logo.png",
+  "logo": "/images/logo.svg",
   "favicon": "public/favicon.ico",
   "theme": "Darkly",
   "port": "3001",
@@ -27,14 +27,14 @@
   "locale": "locale/en.json",
   "display": {
     "api": true,
-    "markets": true,
+    "markets": false,
     "richlist": true,
     "twitter": true,
-    "facebook": false,
-    "googleplus": false,
-    "youtube": false,
+    "facebook": true,
+    "googleplus": true,
+    "youtube": true,
     "search": true,
-    "movement": true,
+    "movement": false,
     "network": true
   },
   "index": {
@@ -66,10 +66,10 @@
     "low_flag": 1000,
     "high_flag": 5000
   },
-  "twitter": "iquidus",
-  "facebook": "yourfacebookpage",
-  "googleplus": "yourgooglepluspage",
-  "youtube": "youryoutubechannel",
+  "twitter": "equibit",
+  "facebook": "Equibit",
+  "googleplus": "+EquibitDevelopmentCorporationToronto",
+  "youtube": "UCBWEY89pt-DpPYyPedqGWEg",
   "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
   "genesis_block": "b2926a56ca64e0cd2430347e383f63ad7092f406088b9b86d6d68c2a34baef51",
   "heavy": false,
@@ -77,6 +77,6 @@
   "show_sent_received": true,
   "supply": "COINBASE",
   "nethash": "getnetworkhashps",
-  "nethash_units": "G",
+  "nethash_units": "",
   "labels": {  }
 }
