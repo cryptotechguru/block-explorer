@@ -40,7 +40,7 @@
   "index": {
     "show_hashrate": true,
     "difficulty": "POW",
-    "last_txs": 100
+    "last_txs": 1000
   },
   "api": {
     "blockindex": 1337,
