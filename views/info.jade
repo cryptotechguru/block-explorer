@@ -94,7 +94,7 @@ block content
 
           *  **getdistribution**  
                *Returns wealth distribution stats*  
-               [#{address}/ext/getdistribution](/ext/getdistribution)               
+               [#{address}/ext/getdistribution](/ext/getdistribution)
 
           *  **getaddress (/ext/getaddress/hash)**  
                *Returns information for given address*  
@@ -104,10 +104,10 @@ block content
                *Returns current balance of given address*  
                [#{address}/ext/getbalance/#{hashes.address}](/ext/getbalance/#{hashes.address})
 
-          *  **getlasttxs (/ext/getlasttxs/count/min)**  
-               *Returns last [count] transactions greater than [min]*  
+          *  **getlasttxs (/ext/getlasttxs?count=[number\_of\_txs]&minAmount=[min\_amount\_in\_#{settings.symbol}]&start=[most\_recent\_tx\_objectid])**  
+               *Returns last [count] transactions with amounts (measured in #{settings.symbol}) greater than [minAmount]. Start is mainly used for paging results such that if specified, only transactions with objectIds less than [start] will be returned. Since objectIds are created according to when the transaction was added to the database, they essentially serve as a unique timestamp to query by.*  
                *Note: returned values are in satoshis*  
-               [#{address}/ext/getlasttxs/10/100](/ext/getlasttxs/10/100)
+               [#{address}/ext/getlasttxs?count=10&minAmount=5](/ext/getlasttxs?count=10&minAmount=5)
 
           ------
 

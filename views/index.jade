@@ -21,12 +21,12 @@ block content
           }
         },
         columns: [
-          //{ data: 'height', width: '8%' },
+          { data: 'blockcount', width: '8%' },
           { data: 'difficulty', width: '10%' },
-          //{ data: 'size', width:'10%' },
-          //{ data: 'txs', width: '10%' },
+          //- { data: 'size', width:'10%' },
+          //- { data: 'txs', width: '10%' },
           { data: 'supply', width: '15%' },
-          //{ data: 'time', width: '20%' },
+          //- { data: 'time', width: '20%' },
         ]
       });
       var rtable = $('#recent-table').dataTable( {  
@@ -37,7 +37,7 @@ block content
         lengthChange: true,
         processing: true,
         ajax: {
-          url: '/ext/getlasttxs/0.00000001',
+          url: '/ext/getlasttxs?minAmount=0.00000001',
           dataSrc: function ( json ) {
             for ( var i=0;i<json.data.length; i++ ) {
               json.data[i]['timestamp'] = new Date((json.data[i]['timestamp']) * 1000).toUTCString();

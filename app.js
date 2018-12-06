@@ -1,4 +1,5 @@
 const express = require('express'),
+  debug = require('debug')('explorer'),
   path = require('path'),
   bitcoinapi = require('bitcoin-node-api'),
   favicon = require('static-favicon'),
@@ -109,10 +110,13 @@ app.use('/ext/getdistribution', function(req,res){
   });
 });
 
-app.use('/ext/getlasttxs/:min', function(req,res){
-  db.get_last_txs(settings.index.last_txs, (req.params.min * 100000000), function(txs){
-    res.send({data: txs});
-  });
+app.use('/ext/getlasttxs', function (req, res) {
+  return db.get_last_txs(parseInt(req.query.count) || settings.index.last_txs, req.query.minAmount * 100000000, req.query.start).then(txs =>
+    res.send({data: txs})
+  ).catch(err => {
+    debug(err)
+    res.send({ error: `An error occurred: ${err}` })
+  })
 });
 
 app.use('/ext/connections', function(req,res){
