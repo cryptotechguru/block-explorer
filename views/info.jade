@@ -108,6 +108,12 @@ block content
                *Returns last [count] transactions with amounts (measured in #{settings.symbol}) greater than [minAmount]. Start is mainly used for paging results such that if specified, only transactions with objectIds less than [start] will be returned. Since objectIds are created according to when the transaction was added to the database, they essentially serve as a unique timestamp to query by.*  
                *Note: returned values are in satoshis*  
                [#{address}/ext/getlasttxs?count=10&minAmount=5](/ext/getlasttxs?count=10&minAmount=5)
+          * **gettxs (/ext/gettxs/start/end)**  
+               *Returns a list of transactions found from [start] to [end] txid.  
+               [#{address}/ext/gettxs/1/10](/ext/gettxs/1/10)
+          * **getblocks (/ext/getblocks/start/end?type=[type])**  
+               *Returns a list of blocks found from [start] to [end] block hash or height, denoted by [type] = [ 'hash' || 'height' ].  
+               [#{address}/ext/getblocks/1/10](/ext/getblocks/1/10)
 
           ------
 

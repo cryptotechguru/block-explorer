@@ -119,6 +119,27 @@ app.use('/ext/getlasttxs', function (req, res) {
   })
 });
 
+app.use('/ext/gettxs/:start/:end', function (req, res) {
+  db.getTxsById(req.param('start'), req.param('end')).then(txs =>
+    res.send({ data: txs })
+  ).catch(err => {
+    debug(err)
+    res.send({ error: `An error occurred: ${err}` })
+  })
+})
+
+app.use('/ext/getblocks/:start/:end', function (req, res) {
+  ((req.query.type === 'hash' || req.param('start').match(/[a-z]/i) || req.param('end').match(/[a-z]/i))
+    ? db.getBlocksByHash(req.param('start'), req.param('end'))
+    : db.getBlocksByHeight(req.param('start'), req.param('end'))
+  ).then(blocks =>
+    res.send({ data: blocks })
+  ).catch(err => {
+    debug(err)
+    res.send({ error: `An error occurred: ${err}` })
+  })
+});
+
 app.use('/ext/connections', function(req,res){
   db.get_peers(function(peers){
     res.send({data: peers});
