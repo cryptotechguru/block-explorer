@@ -12,12 +12,12 @@ function route_get_block(res, blockhash) {
       if (blockhash == settings.genesis_block) {
         res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: 'GENESIS'});
       } else {
-        db.get_txs(block, function(txs) {
+        db.getTxs(block).then(txs => {
           if (txs.length > 0) {
             res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: txs});
           } else {
-            db.create_txs(block, function(){
-              db.get_txs(block, function(ntxs) {
+            db.create_txs(block, function () {
+              db.getTxs(block).then(ntxs => {
                 if (ntxs.length > 0) {
                   res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: ntxs});
                 } else {

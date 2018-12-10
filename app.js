@@ -6,12 +6,13 @@ const express = require('express'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
+  request = require('request'),
   settings = require('./lib/settings'),
   routes = require('./routes/index'),
   lib = require('./lib/explorer'),
   db = require('./lib/database'),
   locale = require('./lib/locale'),
-  { spawnCmd } = require('./lib/util')
+  { promisify, spawnCmd } = require('./lib/util')
 
 const app = express();
 
@@ -119,26 +120,41 @@ app.use('/ext/getlasttxs', function (req, res) {
   })
 });
 
-app.use('/ext/gettxs/:start/:end', function (req, res) {
-  db.getTxsById(req.param('start'), req.param('end')).then(txs =>
-    res.send({ data: txs })
-  ).catch(err => {
-    debug(err)
-    res.send({ error: `An error occurred: ${err}` })
-  })
-})
-
 app.use('/ext/getblocks/:start/:end', function (req, res) {
-  ((req.query.type === 'hash' || req.param('start').match(/[a-z]/i) || req.param('end').match(/[a-z]/i))
-    ? db.getBlocksByHash(req.param('start'), req.param('end'))
-    : db.getBlocksByHeight(req.param('start'), req.param('end'))
-  ).then(blocks =>
-    res.send({ data: blocks })
-  ).catch(err => {
+  const start = parseInt(req.param('start'))
+  const end = parseInt(req.param('end'))
+  if (start > end) {
+    res.send({ error: `End blockheight must be greater than or equal to the start blockheight.` })
+    return
+  }
+
+  const heights = Array(end - start + 1).fill(undefined).map((_, i) => start + i)
+  const txReq = () => Promise.all(heights.map(i => db.getTxs({ height: i })))
+  const infoReq = () => Promise.all(heights.map(i =>
+    promisify(lib.get_blockhash, i)
+      .then(hash => promisify(request, { uri: `${settings.address}/api/getblock?hash=${hash}`, json: true }))
+      .then(([err, resp, body]) => body)
+  ))
+  const onErr = err => {
     debug(err)
     res.send({ error: `An error occurred: ${err}` })
-  })
-});
+  }
+
+  if (req.query.flds === 'summary') infoReq().then(infos => res.send({ data: infos })).catch(onErr)
+  else if (req.query.flds && req.query.flds.length === 1 && req.query.flds[0] === 'txs') txReq().then(txs => res.send({ data: txs })).catch(onErr)
+  else Promise.all([ txReq(), infoReq() ]).then(([ txs, infos ]) => {
+    res.send({
+      data: infos.map((info, i) => ({ ...info, tx: txs[i] })).map(block => {
+        if (req.query.flds && req.query.flds.length) {
+          Object.keys(block).forEach(key => {
+            if (!req.query.flds.includes(key)) delete block[key]
+          })
+        }
+        return block
+      })
+    })
+  }).catch(onErr)
+})
 
 app.use('/ext/connections', function(req,res){
   db.get_peers(function(peers){
