@@ -109,8 +109,8 @@ block content
                *Note: returned values are in satoshis*  
                [#{address}/ext/getlasttxs?count=10&minAmount=5](/ext/getlasttxs?count=10&minAmount=5)
 
-          * **getblocks (/ext/getblocks/start/end?flds=[fields])**  
-               *Returns a list of blocks found from [start] to [end] block height (inclusive).*  
+          * **getblocks (/ext/getblocks/start/end?flds=[fields]&reverse=[true|false])**  
+               *Returns a list of blocks found from [start] to [end] block height (inclusive, indexed from 1). [reverse] can be set to read from the most recent blocks first (e.g. /ext/getblocks/1/10?reverse=true will return the 10 most recent blocks).*  
                *[flds] is a list of fields to return, if set to "summary" it will only return block info, ["txs"] is commonly used to only return transactions in the block.*  
                [#{address}/ext/getblocks/1/10](/ext/getblocks/1/10)
 

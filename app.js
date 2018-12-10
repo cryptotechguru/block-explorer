@@ -120,7 +120,7 @@ app.use('/ext/getlasttxs', function (req, res) {
   })
 });
 
-app.use('/ext/getblocks/:start/:end', function (req, res) {
+app.use('/ext/getblocks/:start/:end', async function (req, res) {
   const start = parseInt(req.param('start'))
   const end = parseInt(req.param('end'))
   if (start > end) {
@@ -128,7 +128,11 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
     return
   }
 
-  const heights = Array(end - start + 1).fill(undefined).map((_, i) => start + i)
+  let heights = Array(end - start + 1).fill(undefined).map((_, i) => start + i)
+  if (req.query.reverse) await promisify(request, { uri: `${settings.address}/api/getblockcount`, json: true })
+    .then(([ err, resp, height ]) => {
+      heights = heights.map(h => height - h + 1)
+    })
   const txReq = () => Promise.all(heights.map(i => db.getTxs({ height: i })))
   const infoReq = () => Promise.all(heights.map(i =>
     promisify(lib.get_blockhash, i)
