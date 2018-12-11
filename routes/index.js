@@ -8,18 +8,19 @@ var express = require('express')
 
 function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
+    const canRender = list => list && list.length > 0 && list.filter(l => l).length
     if (block != 'There was an error. Check your console.') {
       if (blockhash == settings.genesis_block) {
         res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: 'GENESIS'});
       } else {
-        db.get_txs(block, function(txs) {
-          if (txs.length > 0) {
-            res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: txs});
+        db.getTxs(block).then(txs => {
+          if (txs && txs.length > 0) {
+            res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: canRender(txs) || []});
           } else {
-            db.create_txs(block, function(){
-              db.get_txs(block, function(ntxs) {
-                if (ntxs.length > 0) {
-                  res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: ntxs});
+            db.create_txs(block, function () {
+              db.getTxs(block).then(ntxs => {
+                if (ntxs && ntxs.length > 0) {
+                  res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: canRender(ntxs) || []});
                 } else {
                   route_get_index(res, 'Block not found: ' + blockhash);
                 }
@@ -61,7 +62,7 @@ function route_get_tx(res, txid) {
                       blockhash: '-',
                       blockindex: -1,
                     };
-                    res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount:-1});
+                    res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount:-1 });
                   } else {
                     var utx = {
                       txid: rtx.txid,
@@ -73,7 +74,7 @@ function route_get_tx(res, txid) {
                       blockindex: rtx.blockheight,
                     };
                     lib.get_blockcount(function(blockcount) {
-                      res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount: blockcount});
+                      res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount: blockcount });
                     });
                   }
                 });
@@ -89,7 +90,7 @@ function route_get_tx(res, txid) {
 }
 
 function route_get_index(res, error) {
-  res.render('index', { active: 'home', error: error, warning: null});
+  res.render('index', { active: 'home', error: error, warning: null });
 }
 
 function route_get_address(res, hash, count) {
@@ -112,7 +113,7 @@ function route_get_address(res, hash, count) {
         });
       }, function(){
 
-        res.render('address', { active: 'address', address: address, txs: txs});
+        res.render('address', { active: 'address', address: address, txs: txs });
       });
 
     } else {
