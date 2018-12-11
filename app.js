@@ -17,9 +17,9 @@ const express = require('express'),
 const app = express();
 
 // set database update intervals
-spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
+spawnCmd('node', [ 'scripts/sync.js', 'index', settings.index.index_mode || 'update' ])
 setInterval(function () {
-  spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
+  spawnCmd('node', [ 'scripts/sync.js', 'index', settings.index.index_mode || 'update' ])
 }, settings.sync_timeout)
 setInterval(function () {
   spawnCmd('node', [ 'scripts/sync.js', 'market' ])
@@ -112,7 +112,7 @@ app.use('/ext/getdistribution', function(req,res){
 });
 
 app.use('/ext/getlasttxs', function (req, res) {
-  return db.get_last_txs(parseInt(req.query.count) || settings.index.last_txs, req.query.minAmount * 100000000, req.query.start).then(txs =>
+  return db.get_last_txs(parseInt(req.query.count), req.query.minAmount * 100000000, req.query.start).then(txs =>
     res.send({data: txs})
   ).catch(err => {
     debug(err)
@@ -140,7 +140,7 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
         return a._id > b._id ? -1 : 1
       })
       // since reverse means to go from newest to oldest
-      return !reverse ? txs.reverse() : txs
+      return reverse ? txs : txs.reverse()
     })
   ))
   const infoReq = () => Promise.all(heights.map(i =>

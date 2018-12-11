@@ -8,18 +8,19 @@ var express = require('express')
 
 function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
+    const canRender = list => list && list.length > 0 && list.filter(l => l).length
     if (block != 'There was an error. Check your console.') {
       if (blockhash == settings.genesis_block) {
         res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: 'GENESIS'});
       } else {
         db.getTxs(block).then(txs => {
-          if (txs.length > 0) {
-            res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: txs});
+          if (txs && txs.length > 0) {
+            res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: canRender(txs) || []});
           } else {
             db.create_txs(block, function () {
               db.getTxs(block).then(ntxs => {
-                if (ntxs.length > 0) {
-                  res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: ntxs});
+                if (ntxs && ntxs.length > 0) {
+                  res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: canRender(ntxs) || []});
                 } else {
                   route_get_index(res, 'Block not found: ' + blockhash);
                 }

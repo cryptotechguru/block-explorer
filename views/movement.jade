@@ -38,7 +38,7 @@ block content
         lengthChange: false,
         //processing: true,
         ajax: {
-          url: '/ext/getlasttxs?minAmount=#{min_amount}',
+          url: '/ext/getlasttxs?count=100&minAmount=#{min_amount}',
           dataSrc: function ( json ) {
             for ( var i=0;i<json.data.length; i++ ) {
               json.data[i]['timestamp'] = format_unixtime(json.data[i]['timestamp']);
