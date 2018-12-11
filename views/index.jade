@@ -2,7 +2,7 @@ extends layout
 
 block content
   script.
-    $(document).ready(function(){
+    $(document).ready(function () {
       const stable = $('#block-table').dataTable( {  
         autoWidth: true,      
         searching: true,
@@ -14,10 +14,9 @@ block content
         info: false,
         ajax: {
           url: '/ext/summary',
-          dataSrc: function ( json ) {
-          console.log(json.data);
-            json.data[0]['height'] = "<a href='/block/" + json.data[0]['hash'] + "'>" + json.data[0]['height'] + "</a>";
-            return json.data;
+          dataSrc: function (json) {
+            json.data[0]['height'] = "<a href='/block/" + json.data[0]['hash'] + "'>" + json.data[0]['height'] + "</a>"
+            return json.data
           }
         },
         columns: [
@@ -28,7 +27,7 @@ block content
           { data: 'supply', width: '15%' },
           //- { data: 'time', width: '20%' },
         ]
-      });
+      })
       const btable = $('#blocks-table').dataTable({
         autoWidth: true,
         searching: false,
@@ -36,61 +35,36 @@ block content
         responsive: true,
         lengthChange: true,
         processing: true,
-        //- serverSide: true,
-        ajax: {
-          url: `/ext/getblocks/1/${400}?flds=summary&reverse=true`,
-          dataSrc: function (json) {
-            return json.data.map((d, i) => {
-              d['hash'] = `<a href='/block/${d['hash']}'>${d['hash']}</a>`;
-              d['tx'] = d['tx'].map(tx => `<a href='/tx/${tx}'>${tx}</a>`).join(' ');
-              d['timestamp'] = new Date((d['time']) * 1000).toUTCString();
-              return d
+        serverSide: true,
+        ajax: function (data, cb, settings) {
+          $.ajax({
+            url: `/ext/getblocks/${data.start}/${data.start + data.length}?flds=summary&reverse=true&strip=true`
+          }).done((res) => {
+            cb({
+              draw: data.draw,
+              recordsTotal: res.data.blockcount,
+              recordsFiltered: res.data.blockcount,
+              data: res.data.blocks.map((d, i) => {
+                d['hash'] = `<a href='/block/${d['hash']}'>${d['hash']}</a>`;
+                d['tx'] = d['tx'].map(tx => `<a href='/tx/${tx}'>${tx}</a>`).join(' ');
+                d['timestamp'] = new Date((d['time']) * 1000).toUTCString();
+                return d
+              })
             })
-          }
+          })
         },
         columns: [
-          { data: 'height', width: '7%' },
-          { data: 'hash', width: '36%' },
-          { data: 'confirmations', width:'6%' },
-          { data: 'tx', width: '35%' },
-          { data: 'timestamp', width: '16%' },
+          { data: 'height', width: '8%' },
+          { data: 'hash', width: '30%' },
+          { data: 'confirmations', width:'8%' },
+          { data: 'tx', width: '30%' },
+          { data: 'timestamp', width: '14%' },
         ]
       })
-      const rtable = $('#recent-table').dataTable({  
-        autoWidth: true,
-        searching: false,
-        ordering: false,
-        responsive: true,
-        lengthChange: true,
-        processing: true,
-        //- serverSide: true,
-        ajax: {
-          url: '/ext/getlasttxs?minAmount=0.00000001',
-          dataSrc: function ( json ) {
-            for ( var i=0;i<json.data.length; i++ ) {
-              json.data[i]['timestamp'] = new Date((json.data[i]['timestamp']) * 1000).toUTCString();
-              json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'>" + json.data[i]['txid'] + "</a>";
-              json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'>" + json.data[i]['blockindex'] + "</a>";
-              var amount = json.data[i]['total'] / 100000000;
-              json.data[i]['total'] = amount.toFixed(8);
-              json.data[i]['recipients'] = json.data[i]['vout'].length;
-            }
-            return json.data;
-          }
-        },
-        columns: [
-          { data: 'blockindex', width: '8%' },
-          { data: 'txid', width: '40%' },
-          { data: 'recipients', width:'5%' },
-          { data: 'total', width: '15%' },
-          { data: 'timestamp', width: '25%' },
-        ]
-      });
-      setInterval( function () {
-        rtable.api().ajax.reload(null, false);
-        stable.api().ajax.reload(null, false);
-        btable.api().ajax.reload(null, false);
-      }, 60000 );
+      setInterval(function () {
+        stable.api().ajax.reload(null, false)
+        btable.api().ajax.reload(null, false)
+      }, 30000)
     });
   .row
     .col-md-12
@@ -116,15 +90,6 @@ block content
             th.text-center #{settings.locale.transactions}
             th.text-center #{settings.locale.timestamp}
         tbody.text-center
-      //- table#recent-table.table.table-bordered.table-striped
-      //-   thead
-      //-     tr
-      //-       th.text-center #{settings.locale.ex_block}
-      //-       th.hidden-xs.text-center #{settings.locale.tx_hash}
-      //-       th.hidden-xs.text-center #{settings.locale.tx_recipients}
-      //-       th.text-center #{settings.locale.mkt_amount} (#{settings.symbol})
-      //-       th.text-center #{settings.locale.timestamp}
-      //-   tbody.text-center
     .footer-padding
       
               
