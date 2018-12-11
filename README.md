@@ -72,10 +72,13 @@ On Linux you can use this version by default to avoid executing the previous two
 
 Set the following environment variables:
 
-    $ export MONGO_DB_URI='mongodb://iquidus:3xp!0reR@localhost:27017/explorerdb'
-    $ export EQUIBIT_CORE_URL=ip-or-domain-of-node:PORT
-    $ export EQUIBIT_CORE_USERNAME=username_of_node
-    $ export EQUIBIT_CORE_PASSWORD=password_of_node
+    MONGO_DB_URI='mongodb://iquidus:3xp!0reR@localhost:27017/explorerdb'
+    EQUIBIT_CORE_URL=ip-or-domain-of-node:PORT
+    EQUIBIT_CORE_USERNAME=username_of_node
+    EQUIBIT_CORE_PASSWORD=password_of_node
+
+On Linux this can be done like: `export ENV_VAR=VALUE`
+On Windows this can be done like: `set ENV_VAR=VALUE`
 
 To run in debug mode set the DEBUG environment variable to anything (e.g. `DEBUG=*`).
 
@@ -83,7 +86,7 @@ To run in debug mode set the DEBUG environment variable to anything (e.g. `DEBUG
 
 Ensure the user specified in the `MONGO_DB_URI` has read/write permissions. If needed, you can manually create the database and the user:
 
-    $ mongo
+    mongo
     > use explorerdb
     > db.createUser( { user: "iquidus", pwd: "3xp!0reR", roles: [ "readWrite" ] } )
 
