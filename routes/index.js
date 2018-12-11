@@ -61,7 +61,7 @@ function route_get_tx(res, txid) {
                       blockhash: '-',
                       blockindex: -1,
                     };
-                    res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount:-1});
+                    res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount:-1 });
                   } else {
                     var utx = {
                       txid: rtx.txid,
@@ -73,7 +73,7 @@ function route_get_tx(res, txid) {
                       blockindex: rtx.blockheight,
                     };
                     lib.get_blockcount(function(blockcount) {
-                      res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount: blockcount});
+                      res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount: blockcount });
                     });
                   }
                 });
@@ -89,7 +89,7 @@ function route_get_tx(res, txid) {
 }
 
 function route_get_index(res, error) {
-  res.render('index', { active: 'home', error: error, warning: null});
+  res.render('index', { active: 'home', error: error, warning: null });
 }
 
 function route_get_address(res, hash, count) {
@@ -112,7 +112,7 @@ function route_get_address(res, hash, count) {
         });
       }, function(){
 
-        res.render('address', { active: 'address', address: address, txs: txs});
+        res.render('address', { active: 'address', address: address, txs: txs });
       });
 
     } else {
