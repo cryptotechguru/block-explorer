@@ -46,7 +46,6 @@ block content
               recordsFiltered: res.data.blockcount,
               data: res.data.blocks.map((d, i) => {
                 d['hash'] = `<a href='/block/${d['hash']}'>${d['hash']}</a>`;
-                d['tx'] = d['tx'].map(tx => `<a href='/tx/${tx}'>${tx}</a>`).join(' ');
                 d['timestamp'] = new Date((d['time']) * 1000).toUTCString();
                 return d
               })
@@ -54,11 +53,9 @@ block content
           })
         },
         columns: [
-          { data: 'height', width: '8%' },
-          { data: 'hash', width: '30%' },
-          { data: 'confirmations', width:'8%' },
-          { data: 'tx', width: '30%' },
-          { data: 'timestamp', width: '14%' },
+          { data: 'height', width: '15%' },
+          { data: 'hash', width: '45%' },
+          { data: 'timestamp', width: '20%' },
         ]
       })
       setInterval(function () {
@@ -86,8 +83,6 @@ block content
           tr
             th.text-center #{settings.locale.height}
             th.hidden-xs.text-center #{settings.locale.tx_block_hash}
-            th.text-center #{settings.locale.confirmations}
-            th.text-center #{settings.locale.transactions}
             th.text-center #{settings.locale.timestamp}
         tbody.text-center
     .footer-padding
