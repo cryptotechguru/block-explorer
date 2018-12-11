@@ -110,8 +110,8 @@ block content
                [#{address}/ext/getlasttxs?count=10&minAmount=5](/ext/getlasttxs?count=10&minAmount=5)
 
           * **getblocks (/ext/getblocks/start/end?flds=[fields]&reverse=[true|false]&strip=[true|false])**  
-               *Returns a list of blocks found from [start] to [end] block height (inclusive, indexed from 1). [reverse] can be set to read from the most recent blocks first (e.g. /ext/getblocks/1/10?reverse=true will return the 10 most recent blocks). A list of length end - start will always be returned and blocks not found will simply be set to null, however if [strip] is true, all invalid blockheights will be removed from the returned results.*  
-               *[flds] is a list of fields to return, if set to "summary" it will only return block info, ["txs"] is commonly used to only return transactions in the block.*  
+               *Returns a list of blocks found from [start] to [end] block height (inclusive, indexed from 1). \[reverse\] can be set to read from the most recent blocks first (e.g. /ext/getblocks/1/10?reverse=true will return the 10 most recent blocks). A list of length end - start will always be returned and blocks not found will simply be set to null, however if [strip] is true, all invalid blockheights will be removed from the returned results.*  
+               *[flds] is a list of fields to return, if set to "summary" it will only return block info, ["tx"] is commonly used to only return transactions in the block.*  
                [#{address}/ext/getblocks/1/10](/ext/getblocks/1/10)
 
           ------

@@ -123,32 +123,45 @@ app.use('/ext/getlasttxs', function (req, res) {
 app.use('/ext/getblocks/:start/:end', function (req, res) {
   const start = parseInt(req.param('start'))
   const end = parseInt(req.param('end'))
+  const reverse = req.query.reverse && req.query.reverse.toLowerCase() === 'true'
+  const strip = req.query.strip && req.query.strip.toLowerCase() === 'true'
   if (start > end) {
     res.send({ error: `End blockheight must be greater than or equal to the start blockheight.` })
     return
   }
 
   let heights = Array(end - start + 1).fill(undefined).map((_, i) => start + i)
-  const txReq = () => Promise.all(heights.map(i => db.getTxs({ height: i })))
+  const txReq = () => Promise.all(heights.map(i =>
+    db.getTxs({ height: i }).then(txs => {
+      // sorts transactions from newest to oldest
+      txs.sort((a, b) => {
+        if (a.blockindex !== b.blockindex) return a.blockindex > b.blockindex ? -1 : 1
+        if (a.timestamp !== b.timestamp) return a.timestamp > b.timestamp ? -1 : 1
+        return a._id > b._id ? -1 : 1
+      })
+      // since reverse means to go from newest to oldest
+      return !reverse ? txs.reverse() : txs
+    })
+  ))
   const infoReq = () => Promise.all(heights.map(i =>
     promisify(lib.get_blockhash, i)
       .then(hash => {
         if (hash.includes('There was an error')) return Array(3).fill(null)
         return promisify(request, { uri: `${settings.address}/api/getblock?hash=${hash}`, json: true })
       }).then(([err, resp, body]) => body)
-  )).then(infos => req.query.strip ? infos.filter(info => info !== null) : infos)
+  )).then(infos => strip ? infos.filter(info => info !== null) : infos)
   const onErr = err => {
     debug(err)
     res.send({ error: `An error occurred: ${err}` })
   }
 
   promisify(request, { uri: `${settings.address}/api/getblockcount`, json: true }).then(([ err, resp, height ]) => {
-    if (req.query.reverse) heights = heights.map(h => height - h + 1)
+    if (reverse) heights = heights.map(h => height - h + 1)
     return height
   }).then(blockcount => {
     if (req.query.flds === 'summary') {
       infoReq().then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
-    } else if (req.query.flds && req.query.flds.length === 1 && req.query.flds[0] === 'txs') {
+    } else if (req.query.flds && req.query.flds.length === 1 && req.query.flds[0] === 'tx') {
       txReq().then(txs => res.send({ data: { blockcount, blocks: txs } })).catch(onErr)
     } else {
       Promise.all([ txReq(), infoReq() ]).then(([ txs, infos ]) => {
