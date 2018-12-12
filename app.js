@@ -19,7 +19,7 @@ const app = express();
 // set database update intervals
 spawnCmd('node', [ 'scripts/sync.js', 'index', settings.index.index_mode || 'update' ])
 setInterval(function () {
-  spawnCmd('node', [ 'scripts/sync.js', 'index', settings.index.index_mode || 'update' ])
+  spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
 }, settings.sync_timeout)
 setInterval(function () {
   spawnCmd('node', [ 'scripts/sync.js', 'market' ])
