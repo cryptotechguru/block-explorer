@@ -3,7 +3,7 @@ extends layout
 block content
   script.
     $(document).ready(function () {
-      const stable = $('#block-table').dataTable( {  
+      var stable = $('#block-table').dataTable( {  
         autoWidth: true,      
         searching: true,
         ordering: false,
@@ -28,7 +28,7 @@ block content
           //- { data: 'time', width: '20%' },
         ]
       })
-      const btable = $('#blocks-table').dataTable({
+      var btable = $('#blocks-table').dataTable({
         autoWidth: true,
         searching: false,
         ordering: false,
