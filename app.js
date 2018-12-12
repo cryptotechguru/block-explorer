@@ -155,19 +155,14 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
     res.send({ error: `An error occurred: ${err}` })
   }
 
+  debug(`PROMISIFY: ${promisify.toString()}`)
+  debug(`REQUEST: ${request.toString()}`)
   promisify(request, { uri: `${settings.address}/api/getblockcount`, json: true }).then(([ err, resp, height ]) => {
     if (reverse) heights = heights.map(h => height - h + 1)
-    debug(`BLOCK HEIGHT: ${height}`)
     return height
   }).then(blockcount => {
     if (req.query.flds === 'summary') {
-      Promise.all(heights.map(i =>
-        promisify(lib.get_blockhash, i)
-          .then(hash => {
-            if (hash.includes('There was an error')) return Array(3).fill(null)
-            return promisify(request, { uri: `${settings.address}/api/getblock?hash=${hash}`, json: true })
-          }).then(([err, resp, body]) => body)
-      )).then(infos => strip ? infos.filter(info => info !== null) : infos).then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
+      infoReq().then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
     } else if (req.query.flds && req.query.flds.length === 1 && req.query.flds[0] === 'tx') {
       txReq().then(txs => res.send({ data: { blockcount, blocks: txs } })).catch(onErr)
     } else {
