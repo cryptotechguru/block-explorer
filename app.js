@@ -157,11 +157,8 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
 
   debug(`PROMISIFY: ${promisify.toString()}`)
   debug(`REQUEST: ${request.toString()}`)
-  promisify(request.bind(this), { uri: `${settings.address}/api/getblockcount`, json: true }).then(([ err, resp, height ]) => {
-    debug(`AFTER BLOCKCOUNT REQUEST ${height}`)
-    if (reverse) heights = heights.map(h => height - h + 1)
-    return height
-  }).then(blockcount => {
+  request(`${settings.address}/api/getblockcount`, { json: true }, (err, resp, blockcount) => {
+    if (reverse) heights = heights.map(h => blockcount - h + 1)
     debug(`AFTER REVERSING ${blockcount}`)
     if (req.query.flds === 'summary') {
       infoReq().then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
@@ -181,7 +178,7 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
         })
       }).catch(onErr)
     }
-  }).catch(onErr)
+  })
 })
 
 app.use('/ext/connections', function(req,res){
