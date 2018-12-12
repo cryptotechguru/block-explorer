@@ -157,27 +157,28 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
 
   debug(`PROMISIFY: ${promisify.toString()}`)
   debug(`REQUEST: ${request.toString()}`)
-  request(`${settings.address}/api/getblockcount`, { json: true }, (err, resp, blockcount) => {
+  request(`${settings.address}/api/getblockcount`, { json: true }, (...results) => {
     if (reverse) heights = heights.map(h => blockcount - h + 1)
-    debug(`AFTER REVERSING ${blockcount}`)
-    if (req.query.flds === 'summary') {
-      infoReq().then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
-    } else if (req.query.flds && req.query.flds.length === 1 && req.query.flds[0] === 'tx') {
-      txReq().then(txs => res.send({ data: { blockcount, blocks: txs } })).catch(onErr)
-    } else {
-      Promise.all([ txReq(), infoReq() ]).then(([ txs, infos ]) => {
-        res.send({
-          data: { blockcount, blocks: infos.map((info, i) => ({ ...info, tx: txs[i] })).map(block => {
-            if (req.query.flds && req.query.flds.length) {
-              Object.keys(block).forEach(key => {
-                if (!req.query.flds.includes(key)) delete block[key]
-              })
-            }
-            return block
-          }) }
-        })
-      }).catch(onErr)
-    }
+    debug(`AFTER REVERSING ${results}`)
+    res.send(results)
+    // if (req.query.flds === 'summary') {
+    //   infoReq().then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
+    // } else if (req.query.flds && req.query.flds.length === 1 && req.query.flds[0] === 'tx') {
+    //   txReq().then(txs => res.send({ data: { blockcount, blocks: txs } })).catch(onErr)
+    // } else {
+    //   Promise.all([ txReq(), infoReq() ]).then(([ txs, infos ]) => {
+    //     res.send({
+    //       data: { blockcount, blocks: infos.map((info, i) => ({ ...info, tx: txs[i] })).map(block => {
+    //         if (req.query.flds && req.query.flds.length) {
+    //           Object.keys(block).forEach(key => {
+    //             if (!req.query.flds.includes(key)) delete block[key]
+    //           })
+    //         }
+    //         return block
+    //       }) }
+    //     })
+    //   }).catch(onErr)
+    // }
   })
 })
 
