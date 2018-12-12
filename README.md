@@ -21,9 +21,44 @@ An open source block explorer written in node.js.
 
 ### Requires
 
-*  node.js >= 0.10.28
-*  mongodb 2.6.x
+*  node.js (>= 10.14.1 recommended)
+*  mongodb (>= 3.6.3 recommended)
 *  *coind
+
+### MongoDB installation
+
+#### Linux (Ubuntu)
+
+    sudo apt install -y mongodb
+
+#### Windows
+
+Follow the instructions found at https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/ and make sure you start the mongo service
+
+### Install NVM
+
+#### Linux (NVM)
+
+Download and run the install script
+
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+
+Add the following to you shell startup file (usually .bashrc or .zshrc)
+
+     [[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh  # This loads NVM
+
+#### Windows (NVM-Windows)
+
+Download and run the latest installer from https://github.com/coreybutler/nvm/releases
+
+#### Install the latest Node.js LTS
+
+    nvm install 10.14.1
+    nvm use 10.14.1
+
+On Linux you can use this version by default to avoid executing the previous two commands every time a new terminal is opened
+
+    nvm alias default 10.14.1
 
 ### Get the source
 
@@ -37,10 +72,13 @@ An open source block explorer written in node.js.
 
 Set the following environment variables:
 
-    $ export MONGO_DB_URI='mongodb://iquidus:3xp!0reR@localhost:27017/explorerdb'
-    $ export EQUIBIT_CORE_URL=ip-or-domain-of-node:PORT
-    $ export EQUIBIT_CORE_USERNAME=username_of_node
-    $ export EQUIBIT_CORE_PASSWORD=password_of_node
+    MONGO_DB_URI='mongodb://iquidus:3xp!0reR@localhost:27017/explorerdb'
+    EQUIBIT_CORE_URL=ip-or-domain-of-node:PORT
+    EQUIBIT_CORE_USERNAME=username_of_node
+    EQUIBIT_CORE_PASSWORD=password_of_node
+
+On Linux this can be done like: `export ENV_VAR=VALUE`
+On Windows this can be done like: `set ENV_VAR=VALUE`
 
 To run in debug mode set the DEBUG environment variable to anything (e.g. `DEBUG=*`).
 
@@ -48,7 +86,7 @@ To run in debug mode set the DEBUG environment variable to anything (e.g. `DEBUG
 
 Ensure the user specified in the `MONGO_DB_URI` has read/write permissions. If needed, you can manually create the database and the user:
 
-    $ mongo
+    mongo
     > use explorerdb
     > db.createUser( { user: "iquidus", pwd: "3xp!0reR", roles: [ "readWrite" ] } )
 

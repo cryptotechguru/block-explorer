@@ -53,7 +53,7 @@ html
         });
         setInterval( function() {
           update_stats();
-        }, 60000);
+        }, 30000);
         update_stats();
       });
   body
@@ -82,7 +82,7 @@ html
       - var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;   
       - return time
     -  };
-    .nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+    .nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .container-fluid
         .navbar-header
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-collapse')
@@ -184,7 +184,7 @@ html
             input.form-control(type='text', name='search', placeholder='#{settings.locale.ex_search_message}', style='min-width:80%;margin-right:5px;')
             button.btn.btn-primary(type='submit') #{settings.locale.ex_search_button}
     block content
-    .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
+    .navbar.navbar-inverse.navbar-fixed-bottom.hidden-xs
       .col-md-4
         ul.nav
           li.text-left

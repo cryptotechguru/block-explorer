@@ -6,5 +6,9 @@
     "url": "EQUIBIT_CORE_URL",
     "username": "EQUIBIT_CORE_USERNAME",
     "password": "EQUIBIT_CORE_PASSWORD"
-  }
+  },
+  "index": {
+    "index_mode": "INDEX_MODE"
+  },
+  "address": "API_ENDPOINT"
 }

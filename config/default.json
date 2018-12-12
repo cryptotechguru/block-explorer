@@ -11,7 +11,7 @@
     "password": "undefined"
   },
   "title": "Equibit",
-  "address": "127.0.0.1:3001",
+  "address": "http://127.0.0.1:3001",
   "coin": "Equibit",
   "symbol": "EQB",
   "logo": "/images/logo.png",
@@ -40,7 +40,7 @@
   "index": {
     "show_hashrate": true,
     "difficulty": "POW",
-    "last_txs": 1000
+    "index_mode": "update"
   },
   "api": {
     "blockindex": 1337,
