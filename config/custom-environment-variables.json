@@ -9,5 +9,6 @@
   },
   "index": {
     "index_mode": "INDEX_MODE"
-  }
+  },
+  "address": "API_ENDPOINT"
 }

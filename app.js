@@ -121,10 +121,12 @@ app.use('/ext/getlasttxs', function (req, res) {
 });
 
 app.use('/ext/getblocks/:start/:end', function (req, res) {
+  const endpoint = settings.address || `http://${req.headers.host}`
   const start = parseInt(req.param('start'))
   const end = parseInt(req.param('end'))
   const reverse = req.query.reverse && req.query.reverse.toLowerCase() === 'true'
   const strip = req.query.strip && req.query.strip.toLowerCase() === 'true'
+
   if (start > end) {
     res.send({ error: `End blockheight must be greater than or equal to the start blockheight.` })
     return
@@ -147,7 +149,7 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
     promisify(lib.get_blockhash, i)
       .then(hash => {
         if (hash.includes('There was an error')) return Array(3).fill(null)
-        return promisify(request, { uri: `${settings.address}/api/getblock?hash=${hash}`, json: true })
+        return promisify(request, `${endpoint}/api/getblock?hash=${hash}`, { json: true })
       }).then(([err, resp, body]) => body)
   )).then(infos => strip ? infos.filter(info => info !== null) : infos)
   const onErr = err => {
@@ -155,7 +157,7 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
     res.send({ error: `An error occurred: ${err}` })
   }
 
-  promisify(request, { uri: `${settings.address}/api/getblockcount`, json: true }).then(([ err, resp, height ]) => {
+  promisify(request, `${endpoint}/api/getblockcount`, { json: true }).then(([ err, resp, height ]) => {
     if (reverse) heights = heights.map(h => height - h + 1)
     return height
   }).then(blockcount => {
@@ -177,7 +179,7 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
         })
       }).catch(onErr)
     }
-  })
+  }).catch(onErr)
 })
 
 app.use('/ext/connections', function(req,res){
