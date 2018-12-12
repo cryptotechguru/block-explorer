@@ -157,7 +157,7 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
 
   debug(`PROMISIFY: ${promisify.toString()}`)
   debug(`REQUEST: ${request.toString()}`)
-  promisify(request, { uri: `${settings.address}/api/getblockcount`, json: true }).then(([ err, resp, height ]) => {
+  promisify(request.bind(this), { uri: `${settings.address}/api/getblockcount`, json: true }).then(([ err, resp, height ]) => {
     debug(`AFTER BLOCKCOUNT REQUEST ${height}`)
     if (reverse) heights = heights.map(h => height - h + 1)
     return height
