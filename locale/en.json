@@ -26,6 +26,7 @@
     "ex_summary": "Block Summary",
     "ex_supply": "Coin Supply",
     "ex_block": "Block",
+    "ex_num_transactions": "# of Transactions",
 
     // transaction view
     "tx_title": "Transaction Details",
@@ -58,6 +59,9 @@
     "new_coins": "New Coins",
     "proof_of_stake": "PoS",
     "initial_index_alert": "Indexing is currently incomplete, functionality is limited until index is up-to-date.",
+    "no_inputs_found": "No inputs found",
+    "no_outputs_found": "No outputs found",
+    "n_a": "N/A",
 
     //address menu
     "a_menu_showing": "Showing last",
@@ -146,7 +150,5 @@
     "heavy_estnext": "Est. Next",
     "heavy_changein": "Reward change in approximately",
     "heavy_key": "Key",
-    "heavy_lastxvotes": "Last 20 votes",
-
-    "n_a": "N/A"
+    "heavy_lastxvotes": "Last 20 votes"
 }
