@@ -55,6 +55,7 @@ block content
         columns: [
           { data: 'height', width: '15%' },
           { data: 'hash', width: '45%' },
+          { data: 'nTx', width: '10%' },
           { data: 'timestamp', width: '20%' },
         ]
       })
@@ -83,6 +84,7 @@ block content
           tr
             th.text-center #{settings.locale.height}
             th.hidden-xs.text-center #{settings.locale.tx_block_hash}
+            th.text-center #{settings.locale.ex_num_transactions}
             th.text-center #{settings.locale.timestamp}
         tbody.text-center
     .footer-padding
