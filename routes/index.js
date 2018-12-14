@@ -7,10 +7,10 @@ var express = require('express')
   , qr = require('qr-image');
 
 function route_get_block(res, blockhash) {
-  lib.get_block(blockhash, function (block) {
+  lib.getBlock(blockhash, function (block) {
     const safeRender = list => list && list.length > 0 && list.filter(l => l).length ? list : []
-    if (block != 'There was an error. Check your console.') {
-      if (blockhash == settings.genesis_block) {
+    if (block) {
+      if (blockhash === settings.genesis_block) {
         res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: 'GENESIS'});
       } else {
         db.getTxs(block).then(txs => {
@@ -42,7 +42,7 @@ function route_get_tx(res, txid) {
   } else {
     db.get_tx(txid, function(tx) {
       if (tx) {
-        lib.get_blockcount(function(blockcount) {
+        lib.getBlockcount().then(blockcount => {
           res.render('tx', { active: 'tx', tx: tx, confirmations: settings.confirmations, blockcount: blockcount});
         });
       }
@@ -73,7 +73,7 @@ function route_get_tx(res, txid) {
                       blockhash: rtx.blockhash,
                       blockindex: rtx.blockheight,
                     };
-                    lib.get_blockcount(function(blockcount) {
+                    lib.getBlockcount().then(blockcount => {
                       res.render('tx', { active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount: blockcount });
                     });
                   }
@@ -242,7 +242,7 @@ router.post('/search', function(req, res) {
         if (tx) {
           res.redirect('/tx/' +tx.txid);
         } else {
-          lib.get_block(query, function(block) {
+          lib.getBlock(query, function(block) {
             if (block != 'There was an error. Check your console.') {
               res.redirect('/block/' + query);
             } else {
@@ -297,7 +297,7 @@ router.get('/ext/summary', function(req, res) {
     }
     lib.get_hashrate(function(hashrate) {
       lib.get_connectioncount(function(connections){
-        lib.get_blockcount(function(blockcount) {
+        lib.getBlockcount().then(blockcount => {
           db.get_stats(settings.coin, function (stats) {
             if (hashrate == 'There was an error. Check your console.') {
               hashrate = [ '', 0 ];

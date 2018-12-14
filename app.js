@@ -12,7 +12,7 @@ const express = require('express'),
   lib = require('./lib/explorer'),
   db = require('./lib/database'),
   locale = require('./lib/locale'),
-  { promisify, spawnCmd } = require('./lib/util')
+  { promisify, spawnCmd, requestp } = require('./lib/util')
 
 const app = express();
 
@@ -145,12 +145,11 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
       return reverse ? txs : txs.reverse()
     })
   ))
-  const infoReq = () => Promise.all(heights.map(i =>
+  const infoReq = (blockcount) => Promise.all(heights.map(i =>
     promisify(lib.get_blockhash, i)
-      .then(hash => {
-        if (hash.includes('There was an error')) return Array(3).fill(null)
-        return promisify(request, `${endpoint}/api/getblock?hash=${hash}`, { json: true })
-      }).then(([err, resp, body]) => body)
+      .then(hash =>
+        hash.includes('There was an error') ? null : lib.getBlock(hash, undefined, blockcount)
+      )
   )).then(infos => strip ? infos.filter(info => info !== null) : infos)
   const onErr = err => {
     debug(err)
@@ -162,11 +161,11 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
     return height
   }).then(blockcount => {
     if (req.query.flds === 'summary') {
-      infoReq().then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
+      infoReq(blockcount).then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
     } else if (req.query.flds && req.query.flds.length === 1 && req.query.flds[0] === 'tx') {
       txReq().then(txs => res.send({ data: { blockcount, blocks: txs } })).catch(onErr)
     } else {
-      Promise.all([ txReq(), infoReq() ]).then(([ txs, infos ]) => {
+      Promise.all([ txReq(), infoReq(blockcount) ]).then(([ txs, infos ]) => {
         res.send({
           data: { blockcount, blocks: infos.map((info, i) => ({ ...info, tx: txs[i] })).map(block => {
             if (req.query.flds && req.query.flds.length) {
