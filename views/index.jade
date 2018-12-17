@@ -3,31 +3,6 @@ extends layout
 block content
   script.
     $(document).ready(function () {
-      var stable = $('#block-table').dataTable( {  
-        autoWidth: true,      
-        searching: true,
-        ordering: false,
-        responsive: true,
-        lengthChange: false,
-        processing: true,
-        paging: false,
-        info: false,
-        ajax: {
-          url: '/ext/summary',
-          dataSrc: function (json) {
-            json.data[0]['height'] = "<a href='/block/" + json.data[0]['hash'] + "'>" + json.data[0]['height'] + "</a>"
-            return json.data
-          }
-        },
-        columns: [
-          { data: 'blockcount', width: '8%' },
-          { data: 'difficulty', width: '10%' },
-          //- { data: 'size', width:'10%' },
-          //- { data: 'txs', width: '10%' },
-          { data: 'supply', width: '15%' },
-          //- { data: 'time', width: '20%' },
-        ]
-      })
       var btable = $('#blocks-table').dataTable({
         autoWidth: true,
         searching: false,
@@ -35,6 +10,9 @@ block content
         responsive: true,
         lengthChange: true,
         processing: true,
+        language: {
+          processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"><span class="sr-only">Loading...</span></i>'
+        },
         serverSide: true,
         ajax: function (data, cb, settings) {
           $.ajax({
@@ -60,7 +38,6 @@ block content
         ]
       })
       setInterval(function () {
-        stable.api().ajax.reload(null, false)
         btable.api().ajax.reload(null, false)
       }, 30000)
     });

@@ -1,7 +1,7 @@
 const express = require('express'),
   debug = require('debug')('explorer'),
   path = require('path'),
-  bitcoinapi = require('bitcoin-node-api'),
+  { Api, AccessTypes } = require('./lib/api'),
   favicon = require('static-favicon'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
@@ -31,30 +31,23 @@ setInterval(function () {
 const info = require('./info');
 info(app)
 
-// bitcoinapi
-bitcoinapi.setWalletDetails(settings.wallet);
-if (settings.heavy != true) {
-  bitcoinapi.setAccess('only', [ 'getinfo', 'getnetworkhashps', 'getmininginfo','getdifficulty', 'getconnectioncount',
-    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 'getpeerinfo', 'gettxoutsetinfo', 'getmempoolinfo', 'getrawmempool' ]);
-} else {
-  // enable additional heavy api calls
-  /*
-    getvote - Returns the current block reward vote setting.
-    getmaxvote - Returns the maximum allowed vote for the current phase of voting.
-    getphase - Returns the current voting phase ('Mint', 'Limit' or 'Sustain').
-    getreward - Returns the current block reward, which has been decided democratically in the previous round of block reward voting.
-    getnextrewardestimate - Returns an estimate for the next block reward based on the current state of decentralized voting.
-    getnextrewardwhenstr - Returns string describing how long until the votes are tallied and the next block reward is computed.
-    getnextrewardwhensec - Same as above, but returns integer seconds.
-    getsupply - Returns the current money supply.
-    getmaxmoney - Returns the maximum possible money supply.
-  */
-  bitcoinapi.setAccess('only', [ 'getinfo', 'getstakinginfo', 'getnetworkhashps', 'getdifficulty', 'getconnectioncount',
-    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction','getmaxmoney', 'getvote',
-    'getmaxvote', 'getphase', 'getreward', 'getnextrewardestimate', 'getnextrewardwhenstr',
-    'getnextrewardwhensec', 'getsupply', 'gettxoutsetinfo', 'getmempoolinfo', 'getrawmempool' ]);
-}
-// view engine setup
+// bitcoinapi.setWalletDetails(settings.wallet);
+// bitcoinapi.setAccess('only', [
+//   'getnetworkhashps',
+//   'getmininginfo',
+//   'getdifficulty',
+//   'getconnectioncount',
+//   'getblockcount',
+//   'getblockhash',
+//   'getblock',
+//   'getrawtransaction',
+//   'getpeerinfo',
+//   'gettxoutsetinfo',
+//   'getmempoolinfo',
+//   'getrawmempool'
+// ]);
+
+  // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -66,7 +59,26 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
-app.use('/api', bitcoinapi.app);
+app.use('/api', (new Api({
+  rpcConfig: {
+    type: AccessTypes.ONLY,
+    rpc: [
+      'getnetworkhashps',
+      'getmininginfo',
+      'getdifficulty',
+      'getconnectioncount',
+      'getblockcount',
+      'getblockhash',
+      'getblock',
+      'getrawtransaction',
+      'getpeerinfo',
+      'gettxoutsetinfo',
+      'getmempoolinfo',
+      'getrawmempool'
+    ]
+  },
+  wallet: settings.wallet
+})).app);
 app.use('/', routes);
 app.use('/ext/getmoneysupply', function(req,res){
   lib.get_supply(function(supply){
