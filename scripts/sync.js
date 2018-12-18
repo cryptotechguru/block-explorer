@@ -179,11 +179,7 @@ function main() {
         }
       }).then(() =>
         promisify(db.update_db, settings.coin)
-      ).then(() =>
-        promisify(db.get_stats, settings.coin)
-      ).then(stats => {
-        if (settings.heavy) return promisify(db.update_heavy, settings.coin, stats.count, 20)
-      }).then(() => exit(database))
+      ).then(() => exit(database))
     } else {
       return settings.markets.enabled.reduce((complete, m, _, markets) => {
         return promisify(db.check_market, m).then(([m, exists]) => {

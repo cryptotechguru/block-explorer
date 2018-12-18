@@ -31,22 +31,6 @@ setInterval(function () {
 const info = require('./info');
 info(app)
 
-// bitcoinapi.setWalletDetails(settings.wallet);
-// bitcoinapi.setAccess('only', [
-//   'getnetworkhashps',
-//   'getmininginfo',
-//   'getdifficulty',
-//   'getconnectioncount',
-//   'getblockcount',
-//   'getblockhash',
-//   'getblock',
-//   'getrawtransaction',
-//   'getpeerinfo',
-//   'gettxoutsetinfo',
-//   'getmempoolinfo',
-//   'getrawmempool'
-// ]);
-
   // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

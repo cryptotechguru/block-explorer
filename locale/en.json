@@ -137,18 +137,5 @@
     "empoex": "Empoex",
     "cryptsy": "Cryptsy",
     "cryptopia": "Cryptopia",
-    "ccex": "C-Cex",
-
-    // Heavy rewards view
-    "heavy_title": "Reward/voting information",
-    "heavy_vote": "Vote",
-    "heavy_cap": "Coin Cap",
-    "heavy_phase": "Phase",
-    "heavy_maxvote": "Max Vote",
-    "heavy_reward": "Reward",
-    "heavy_current": "Current Reward",
-    "heavy_estnext": "Est. Next",
-    "heavy_changein": "Reward change in approximately",
-    "heavy_key": "Key",
-    "heavy_lastxvotes": "Last 20 votes"
+    "ccex": "C-Cex"
 }
