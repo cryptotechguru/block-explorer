@@ -8,6 +8,7 @@ var express = require('express')
 
 function route_get_block(res, blockhash) {
   lib.getBlock(blockhash, function (block) {
+    console.log(block)
     const safeRender = list => list && list.length > 0 && list.filter(l => l).length ? list : []
     if (block) {
       if (blockhash === settings.genesis_block) {

@@ -160,7 +160,7 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
   const infoReq = (blockcount) => Promise.all(heights.map(i =>
     promisify(lib.get_blockhash, i)
       .then(hash =>
-        hash.includes('There was an error') ? null : lib.getBlock(hash, undefined, blockcount)
+        hash.name === 'RpcError' ? null : lib.getBlock(hash, undefined, blockcount)
       )
   )).then(infos => strip ? infos.filter(info => info !== null) : infos)
   const onErr = err => {
@@ -212,7 +212,6 @@ app.set('googleplus', settings.googleplus);
 app.set('youtube', settings.youtube);
 app.set('genesis_block', settings.genesis_block);
 app.set('index', settings.index);
-app.set('heavy', settings.heavy);
 app.set('txcount', settings.txcount);
 app.set('nethash', settings.nethash);
 app.set('nethash_units', settings.nethash_units);

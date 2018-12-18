@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "bitcoin-core": "^2.0.0",
-    "bitcoin-node-api": "0.1.0",
     "body-parser": "~1.0.0",
     "config": "^3.0.0",
     "cookie-parser": "~1.0.1",
