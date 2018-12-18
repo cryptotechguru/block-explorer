@@ -31,15 +31,15 @@ block content
           })
         },
         columns: [
-          { data: 'height', width: '15%' },
-          { data: 'hash', width: '45%' },
-          { data: 'nTx', width: '10%' },
-          { data: 'timestamp', width: '20%' },
+          { data: 'height', width: '12%' },
+          { data: 'hash', width: '48%' },
+          { data: 'nTx', width: '8%' },
+          { data: 'timestamp', width: '24%' },
         ]
       })
       setInterval(function () {
         btable.api().ajax.reload(null, false)
-      }, 30000)
+      }, parseInt(#{ui_interval}) || 30000)
     });
   .row
     .col-md-12
@@ -56,7 +56,7 @@ block content
     .panel.panel-default
       .panel-heading
         strong #{settings.locale.ex_latest_blocks}
-      table#blocks-table.table.table-bordered.table-striped
+      table#blocks-table.table.table-bordered.table-striped(style='font-family: "B612 Mono"')
         thead
           tr
             th.text-center #{settings.locale.height}

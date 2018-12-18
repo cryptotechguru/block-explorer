@@ -1,7 +1,7 @@
 const express = require('express'),
   debug = require('debug')('explorer'),
   path = require('path'),
-  { Api, AccessTypes } = require('./lib/api'),
+  { Api, SpecTypes, CacheTypes } = require('./lib/api'),
   favicon = require('static-favicon'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
@@ -12,21 +12,9 @@ const express = require('express'),
   lib = require('./lib/explorer'),
   db = require('./lib/database'),
   locale = require('./lib/locale'),
-  { promisify, spawnCmd, requestp } = require('./lib/util')
+  { promisify } = require('./lib/util')
 
 const app = express();
-
-// set database update intervals
-spawnCmd('node', [ 'scripts/sync.js', 'index', settings.index.index_mode || 'update' ])
-setInterval(function () {
-  spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
-}, settings.sync_timeout)
-setInterval(function () {
-  spawnCmd('node', [ 'scripts/sync.js', 'market' ])
-}, settings.market_timeout)
-setInterval(function () {
-  spawnCmd('node', [ 'scripts/peers.js' ])
-}, settings.peer_timeout)
 
 const info = require('./info');
 info(app)
@@ -45,7 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/api', (new Api({
   rpcConfig: {
-    type: AccessTypes.ONLY,
+    type: SpecTypes.ONLY,
+    cacheDefault: CacheTypes.FORCE,
     rpc: [
       'getnetworkhashps',
       'getmininginfo',

@@ -91,7 +91,7 @@ function route_get_tx(res, txid) {
 }
 
 function route_get_index(res, error) {
-  res.render('index', { active: 'home', error: error, warning: null });
+  res.render('index', { active: 'home', error: error, warning: null, ui_interval: settings.ui_interval });
 }
 
 function route_get_address(res, hash, count) {

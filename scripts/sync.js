@@ -131,11 +131,9 @@ function main() {
     return mongoose.connect(settings.dbsettings.uri, settings.dbsettings.options)
   }).then(() => {
     if (database === 'index') {
-      return promisify(db.get_stats, settings.coin).then(() =>
-        promisify(db.check_stats, settings.coin)
-      ).then(exists => {
+      return promisify(db.check_stats, settings.coin).then(exists => {
         if (!exists) {
-          debug('Run \'npm start\' to create database structure before running this script.')
+          debug(`Run 'npm start' to create database structure before running this script.`)
           exit(database)
         }
         return promisify(db.get_stats, settings.coin)

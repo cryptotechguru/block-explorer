@@ -28,6 +28,7 @@
   "sync_timeout": 60000,
   "market_timeout": 120000,
   "peer_timeout": 240000,
+  "ui_interval": 30000,
   "confirmations": 40,
   "locale": "locale/en.json",
   "display": {

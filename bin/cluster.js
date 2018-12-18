@@ -3,7 +3,7 @@ const cluster = require('cluster')
 const fs = require('fs')
 const settings = require('../lib/settings')
 const db = require('../lib/database')
-const { prettyPrint } = require('../lib/util')
+const { prettyPrint, spawnCmd } = require('../lib/util')
 
 if (cluster.isMaster) {
   fs.writeFile('./tmp/cluster.pid', process.pid, function (err) {
@@ -12,6 +12,9 @@ if (cluster.isMaster) {
       process.exit(1)
     } else {
       debug('Starting cluster with pid: ' + process.pid)
+
+      const updateIntervals = []
+
       // ensure workers exit cleanly
       process.on('SIGINT', () => {
         debug('Cluster shutting down...')
@@ -19,6 +22,7 @@ if (cluster.isMaster) {
           worker.kill()
         }
         // exit the master process
+        // updateIntervals.forEach(i => clearInterval(i))
         process.exit(0)
       })
 
@@ -26,6 +30,18 @@ if (cluster.isMaster) {
       db.connect(settings.dbsettings).then(() =>
         db.setupSchema()
       ).then(() => {
+        // set database update intervals
+        spawnCmd('node', [ 'scripts/sync.js', 'index', settings.index.index_mode || 'update' ])
+        updateIntervals.push(setInterval(function () {
+          spawnCmd('node', [ 'scripts/sync.js', 'index', 'update' ])
+        }, settings.sync_timeout))
+        updateIntervals.push(setInterval(function () {
+          spawnCmd('node', [ 'scripts/sync.js', 'market' ])
+        }, settings.market_timeout))
+        updateIntervals.push(setInterval(function () {
+          spawnCmd('node', [ 'scripts/peers.js' ])
+        }, settings.peer_timeout))
+
         // spawn a worker for each cpu core
         require('os').cpus().forEach(_ => {
           cluster.fork()
@@ -33,6 +49,7 @@ if (cluster.isMaster) {
       }).catch(err => {
         debug(`An error occured setting up cluster: ${prettyPrint(err)}`)
         debug('Aborting...')
+        // updateIntervals.forEach(i => clearInterval(i))
         process.exit(1)
       })
 
