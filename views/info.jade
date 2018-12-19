@@ -68,13 +68,8 @@ block content
                *Returns current balance of given address*  
                [#{address}/ext/getbalance/#{hashes.address}](/ext/getbalance/#{hashes.address})
 
-          *  **getlasttxs (/ext/getlasttxs?count=[number\_of\_txs]&minAmount=[min\_amount\_in\_#{settings.symbol}]&start=[most\_recent\_tx\_objectid])**  
-               *Returns last [count] transactions with amounts (measured in #{settings.symbol}) greater than [minAmount]. Start is mainly used for paging results such that if specified, only transactions with objectIds less than [start] will be returned. Since objectIds are created according to when the transaction was added to the database, they essentially serve as a unique timestamp to query by.*  
-               *Note: returned values are in satoshis*  
-               [#{address}/ext/getlasttxs?count=10&minAmount=5](/ext/getlasttxs?count=10&minAmount=5)
-
-          * **getblocks (/ext/getblocks/start/end?flds=[fields]&reverse=[true|false]&strip=[true|false])**  
-               *Returns a list of blocks found from [start] to [end] block height (inclusive, indexed from 1). \[reverse\] can be set to read from the most recent blocks first (e.g. /ext/getblocks/1/10?reverse=true will return the 10 most recent blocks). A list of length end - start will always be returned and blocks not found will simply be set to null, however if [strip] is true, all invalid blockheights will be removed from the returned results.*  
+          * **getblocks (/ext/getblocks/start/end?flds=[fields]&reverse=[true|false])**  
+               *Returns a list of blocks found from [start] to [end] block height (inclusive, indexed from 1). \[reverse\] can be set to read from the most recent blocks first (e.g. /ext/getblocks/1/10?reverse=true will return the 10 most recent blocks). A list of all blocks found within the specified height range will be returned.*  
                *[flds] is a list of fields to return, if set to "summary" it will only return block info, ["tx"] is commonly used to only return transactions in the block.*  
                [#{address}/ext/getblocks/1/10](/ext/getblocks/1/10)
 

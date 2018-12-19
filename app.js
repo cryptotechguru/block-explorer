@@ -1,7 +1,7 @@
 const express = require('express'),
   debug = require('debug')('explorer'),
   path = require('path'),
-  { Api, SpecTypes, CacheTypes } = require('./lib/api'),
+  { Api } = require('./lib/api'),
   favicon = require('static-favicon'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
@@ -12,7 +12,7 @@ const express = require('express'),
   lib = require('./lib/explorer'),
   db = require('./lib/database'),
   locale = require('./lib/locale'),
-  { promisify } = require('./lib/util')
+  { promisify, requestp } = require('./lib/util')
 
 const app = express();
 
@@ -31,27 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
-app.use('/api', (new Api({
-  rpcConfig: {
-    type: SpecTypes.ONLY,
-    cacheDefault: CacheTypes.FORCE,
-    rpc: [
-      'getnetworkhashps',
-      'getmininginfo',
-      'getdifficulty',
-      'getconnectioncount',
-      'getblockcount',
-      'getblockhash',
-      'getblock',
-      'getrawtransaction',
-      'getpeerinfo',
-      'gettxoutsetinfo',
-      'getmempoolinfo',
-      'getrawmempool'
-    ]
-  },
-  wallet: settings.wallet
-})).app);
+app.use('/api', Api().app);
 app.use('/', routes);
 app.use('/ext/getmoneysupply', function(req,res){
   lib.get_supply(function(supply){
@@ -96,21 +76,11 @@ app.use('/ext/getdistribution', function(req,res){
   });
 });
 
-app.use('/ext/getlasttxs', function (req, res) {
-  return db.get_last_txs(parseInt(req.query.count), req.query.minAmount * 100000000, req.query.start).then(txs =>
-    res.send({data: txs})
-  ).catch(err => {
-    debug(err)
-    res.send({ error: `An error occurred: ${err}` })
-  })
-});
-
-app.use('/ext/getblocks/:start/:end', function (req, res) {
+app.use('/ext/getblocks/:start/:end', async function (req, res) {
   const endpoint = settings.address || `http://${req.headers.host}`
   const start = parseInt(req.param('start'))
   const end = parseInt(req.param('end'))
   const reverse = req.query.reverse && req.query.reverse.toLowerCase() === 'true'
-  const strip = req.query.strip && req.query.strip.toLowerCase() === 'true'
 
   if (start > end) {
     res.send({ error: `End blockheight must be greater than or equal to the start blockheight.` })
@@ -118,6 +88,20 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
   }
 
   let heights = Array(end - start + 1).fill(undefined).map((_, i) => start + i)
+  if (reverse) {
+    const height = await requestp(`${endpoint}/api/getblockcount`)
+    heights = heights.map(h => height - h + 1)
+  }
+
+  const flds = req.query.flds == 'summary'
+    ? { fulltx: 0, _id: 0 }
+    : req.query.flds == 'tx'
+      ? { fulltx: 1, _id: 0 }
+      : req.query.flds.reduce((acc, fld) => ({ ...acc, [fld]: 1 }), { _id: 0 })
+  const blocks = await lib.getBlocksDb(heights, flds)
+  res.send(blocks)
+
+  /*
   const txReq = () => Promise.all(heights.map(i =>
     db.getTxs({ height: i }).then(txs => {
       // sorts transactions from newest to oldest
@@ -145,9 +129,9 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
     if (reverse) heights = heights.map(h => height - h + 1)
     return height
   }).then(blockcount => {
-    if (req.query.flds === 'summary') {
+    if (req.query.flds == 'summary') {
       infoReq(blockcount).then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
-    } else if (req.query.flds && req.query.flds.length === 1 && req.query.flds[0] === 'tx') {
+    } else if (req.query.flds == 'tx') {
       txReq().then(txs => res.send({ data: { blockcount, blocks: txs } })).catch(onErr)
     } else {
       Promise.all([ txReq(), infoReq(blockcount) ]).then(([ txs, infos ]) => {
@@ -164,6 +148,7 @@ app.use('/ext/getblocks/:start/:end', function (req, res) {
       }).catch(onErr)
     }
   }).catch(onErr)
+  */
 })
 
 app.use('/ext/connections', function(req,res){

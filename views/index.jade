@@ -9,7 +9,7 @@ block content
         ordering: false,
         responsive: true,
         lengthChange: true,
-        processing: true,
+        processing: parseInt(#{ui_interval}) > 10000, // only display loading indicator if update interval is long enough
         language: {
           processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"><span class="sr-only">Loading...</span></i>'
         },

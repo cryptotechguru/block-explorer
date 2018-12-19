@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
   db = require('../lib/database'),
-  Tx = require('../models/tx'),
+  Block = require('../models/block'),
   Address = require('../models/address'),
   Richlist = require('../models/richlist'),
   Stats = require('../models/stats'),
@@ -136,48 +136,31 @@ function main() {
           debug(`Run 'npm start' to create database structure before running this script.`)
           exit(database)
         }
-        return promisify(db.get_stats, settings.coin)
-      }).then(stats => {
+      }).then(async () => {
+        await db.updateStats(settings.coin)
+        const stats = await promisify(Stats.findOne.bind(Stats), { coin: settings.coin })
+
         if (mode === 'reindex') {
-          return promisify(Tx.remove.bind(Tx), {}).then(err =>
-            promisify(Address.remove.bind(Address), {})
-          ).then(err =>
-            promisify(Richlist.update.bind(Richlist), { coin: settings.coin }, { received: [], balance: [] })
-          ).then(err =>
-            promisify(Stats.update.bind(Stats), { coin: settings.coin }, { last: 0 })
-          ).then(() => {
-            debug(`\n\n${stats.count}\n\n`)
-            debug('index cleared (reindex)')
-            return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.update_timeout)
-          }).then(() =>
-            promisify(db.update_richlist, 'received')
-          ).then(() =>
-            promisify(db.update_richlist, 'balance')
-          ).then(() =>
-            promisify(db.get_stats, settings.coin)
-          ).then(nstats => {
-            debug(`reindex complete (block: ${nstats.last})`)
-          })
-        } else if (mode === 'check') {
-          return promisify(db.update_tx_db, settings.coin, 1, stats.count, settings.check_timeout).then(() =>
-            promisify(db.get_stats, settings.coin)
-          ).then(nstats => {
-            debug(`check complete (block: ${nstats.last})`)
-          })
-        } else if (mode === 'update') {
-          return promisify(db.update_tx_db, settings.coin, stats.last, stats.count, settings.update_timeout).then(() =>
-            promisify(db.update_richlist, 'received')
-          ).then(() =>
-            promisify(db.update_richlist, 'balance')
-          ).then(() =>
-            promisify(db.get_stats, settings.coin)
-          ).then(nstats => {
-            debug(`update complete (block: ${nstats.last})`)
-          })
+          await promisify(Block.remove.bind(Block), {})
+          await promisify(Address.remove.bind(Address), {})
+          await promisify(Richlist.update.bind(Richlist), { coin: settings.coin }, { received: [], balance: [] })
+          
+          debug('[reindex]: index cleared')
         }
-      }).then(() =>
-        promisify(db.update_db, settings.coin)
-      ).then(() => exit(database))
+
+        await db.updateDb(stats, 0, stats.blocks, settings.update_timeout)
+
+        if (mode === 'check') {
+          debug(`[check]: complete`)
+          return
+        }
+
+        await promisify(db.update_richlist, 'received')
+        await promisify(db.update_richlist, 'balance')
+
+        debug(`[${mode}]: index complete (${stats.blocks})`)
+        exit(database)
+      })
     } else {
       return settings.markets.enabled.reduce((complete, m, _, markets) => {
         return promisify(db.check_market, m).then(([m, exists]) => {
