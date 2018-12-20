@@ -6,7 +6,7 @@ var StatsSchema = new Schema({
   blocks: { type: Number, default: 1 },
   currentblockweight: { type: Number, default: 4000 },
   currentblocktx: { type: Number, default: 0 },
-  difficulty: { type: Object, default: 1 },
+  difficulty: { type: String, default: 1 },
   networkhashps: { type: String, default: 'N/A' },
   pooledtx: { type: Number, default: 0 },
   chain: { type: String },

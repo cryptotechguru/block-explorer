@@ -87,19 +87,17 @@ app.use('/ext/getblocks/:start/:end', async function (req, res) {
     return
   }
 
+  const blockcount = await requestp(`${endpoint}/api/getblockcount`)
   let heights = Array(end - start + 1).fill(undefined).map((_, i) => start + i)
-  if (reverse) {
-    const height = await requestp(`${endpoint}/api/getblockcount`)
-    heights = heights.map(h => height - h + 1)
-  }
+  if (reverse) heights = heights.map(h => blockcount - h + 1)
 
   const flds = req.query.flds == 'summary'
     ? { fulltx: 0, _id: 0 }
     : req.query.flds == 'tx'
       ? { fulltx: 1, _id: 0 }
-      : req.query.flds.reduce((acc, fld) => ({ ...acc, [fld]: 1 }), { _id: 0 })
-  const blocks = await lib.getBlocksDb(heights, flds)
-  res.send(blocks)
+      : req.query.flds ? req.query.flds.reduce((acc, fld) => ({ ...acc, [fld]: 1 }), { _id: 0 }) : []
+  const [ err, blocks ] = await lib.getBlocksDb(heights, flds)
+  res.send({ data: { blockcount, blocks } })
 
   /*
   const txReq = () => Promise.all(heights.map(i =>

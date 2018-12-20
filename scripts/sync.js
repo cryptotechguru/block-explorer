@@ -141,11 +141,8 @@ async function main() {
       exit(database)
     }
 
-    console.log(`\n\nBEFORE STAT\n`)
-    await db.updateStats(settings.coin).then(() => promisify(Stats.findOne.bind(Stats), { coin: settings.coin }))
-      .then(([ err, stats ]) => console.log(stats))
-    // const [ err, stats ] = await promisify(Stats.findOne.bind(Stats), { coin: settings.coin })
-    // console.log(`\n\nAFTER STAT: ${stats}\n`)
+    await db.updateStats(settings.coin)
+    const [ err, stats ] = await promisify(Stats.findOne.bind(Stats), { coin: settings.coin })
 
     if (mode === 'reindex') {
       await promisify(Block.remove.bind(Block), {})
