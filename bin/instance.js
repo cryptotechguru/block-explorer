@@ -2,29 +2,6 @@
 
 // ensure the api singleton has been initialized before anything else
 const settings = require('../lib/settings')
-const { Api, SpecTypes, CacheTypes } = require('../lib/api')
-const api = new Api({
-  allowRawRpc: true,
-  rpcConfig: {
-    type: SpecTypes.ONLY,
-    cacheDefault: CacheTypes.FORCE,
-    rpc: [
-      'getnetworkhashps',
-      'getmininginfo',
-      'getdifficulty',
-      'getconnectioncount',
-      'getblockcount',
-      'getblockhash',
-      'getblock',
-      'getrawtransaction',
-      'getpeerinfo',
-      'gettxoutsetinfo',
-      'getmempoolinfo',
-      'getrawmempool'
-    ]
-  },
-  wallet: settings.wallet
-})
 
 const debug = require('debug')('explorer')
 const db = require('../lib/database')

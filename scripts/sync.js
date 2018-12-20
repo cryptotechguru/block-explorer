@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
   Richlist = require('../models/richlist'),
   Stats = require('../models/stats'),
   settings = require('../lib/settings'),
-  { promisify, prettyPrint } = require('../lib/util'),
+  { promisify, prettyPrint, wait } = require('../lib/util'),
   fs = require('fs'),
   debug = require('debug')('explorer:sync')
 
@@ -113,84 +113,81 @@ function exit(database) {
 ////////  MAIN ENTRYPOINT ////////
 
 const { database, mode } = parseArgs(process.argv.slice(2))
-function main() {
+async function main() {
   debug(`- database=${database}, mode=${mode}`)
-  isLocked(database).then(exists => {
-    // if there's a lock file, exit
-    if (exists) {
-      debug('Script already running.')
-      process.exit()
-    }
-  }).then(() =>
-    createLock(database).catch(e => {
-      debug('Error: unable to create lock file.')
-      process.exit(1)
-    })
-  ).then(() => {
-    debug('Script launched with pid: ' + process.pid)
-    return mongoose.connect(settings.dbsettings.uri, settings.dbsettings.options)
-  }).then(() => {
-    if (database === 'index') {
-      return promisify(db.check_stats, settings.coin).then(exists => {
-        if (!exists) {
-          debug(`Run 'npm start' to create database structure before running this script.`)
-          exit(database)
-        }
-      }).then(async () => {
-        await db.updateStats(settings.coin)
-        const stats = await promisify(Stats.findOne.bind(Stats), { coin: settings.coin })
-
-        if (mode === 'reindex') {
-          await promisify(Block.remove.bind(Block), {})
-          await promisify(Address.remove.bind(Address), {})
-          await promisify(Richlist.update.bind(Richlist), { coin: settings.coin }, { received: [], balance: [] })
-          
-          debug('[reindex]: index cleared')
-        }
-
-        await db.updateDb(stats, 0, stats.blocks, settings.update_timeout)
-
-        if (mode === 'check') {
-          debug(`[check]: complete`)
-          return
-        }
-
-        await promisify(db.update_richlist, 'received')
-        await promisify(db.update_richlist, 'balance')
-
-        debug(`[${mode}]: index complete (${stats.blocks})`)
-        exit(database)
-      })
-    } else {
-      return settings.markets.enabled.reduce((complete, m, _, markets) => {
-        return promisify(db.check_market, m).then(([m, exists]) => {
-          complete++
-          if (exists) {
-            return promisify(db.update_markets_db, m).then(err => {
-              if (err) debug(`${m}: ${err}`)
-              else debug(`${m} market data updated successfully.`)
-              if (complete === markets.length) exit()
-              return complete
-            })
-          }
-          debug(`Error: entry for ${m} does not exist in markets db.`)
-          if (complete === markets.length) exit()
-          return complete
-        })
-      }, 0)
-    }
-  }).catch(err => {
+  
+  // watch for concurrent execution with lockfiles
+  if (await isLocked(database)) {
+    debug('Script already running.')
+    process.exit()
+  }
+  await createLock(database).catch(e => {
+    debug('Error: unable to create lock file.')
+    process.exit(1)
+  })
+  
+  debug('Script launched with pid: ' + process.pid)
+  await promisify(mongoose.connect, settings.dbsettings.uri, settings.dbsettings.options).catch(err => {
     console.log(err)
     console.log(`Unable to connect to database: ${settings.dbsettings.uri}.`)
     console.log(`With options: ${prettyPrint(settings.dbsettings.options, null, 2)}`)
     console.log('Aborting')
     return exit(database)
   })
+
+  if (database === 'index') {
+    if (!(await promisify(db.check_stats, settings.coin))) {
+      debug(`Run 'npm start' to create database structure before running this script.`)
+      exit(database)
+    }
+
+    console.log(`\n\nBEFORE STAT\n`)
+    await db.updateStats(settings.coin).then(() => promisify(Stats.findOne.bind(Stats), { coin: settings.coin }))
+      .then(([ err, stats ]) => console.log(stats))
+    // const [ err, stats ] = await promisify(Stats.findOne.bind(Stats), { coin: settings.coin })
+    // console.log(`\n\nAFTER STAT: ${stats}\n`)
+
+    if (mode === 'reindex') {
+      await promisify(Block.remove.bind(Block), {})
+      await promisify(Address.remove.bind(Address), {})
+      await promisify(Richlist.update.bind(Richlist), { coin: settings.coin }, { received: [], balance: [] })
+      
+      debug('[reindex]: index cleared')
+    }
+
+    await db.updateDb(stats, 0, stats.blocks, settings.update_timeout)
+
+    if (mode === 'check') {
+      debug(`[check]: complete`)
+      return
+    }
+
+    await promisify(db.update_richlist, 'received')
+    await promisify(db.update_richlist, 'balance')
+
+    debug(`[${mode}]: index complete (${stats.blocks})`)
+    exit(database)
+  } else {
+    await settings.markets.enabled.reduce((complete, m, _, markets) => {
+      return promisify(db.check_market, m).then(([m, exists]) => {
+        complete++
+        if (exists) {
+          return promisify(db.update_markets_db, m).then(err => {
+            if (err) debug(`${m}: ${err}`)
+            else debug(`${m} market data updated successfully.`)
+            if (complete === markets.length) exit()
+            return complete
+          })
+        }
+        debug(`Error: entry for ${m} does not exist in markets db.`)
+        if (complete === markets.length) exit()
+        return complete
+      })
+    }, 0)
+  }
 }
 
-try {
-  main()
-} catch (err) {
-  console.log(`An error occurred: ${prettyPrint(err)}`)
+main().catch(err => {
+  console.log(`An error occurred: ${err}`)
   exit(database)
-}
+})

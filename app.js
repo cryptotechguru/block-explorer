@@ -1,7 +1,7 @@
 const express = require('express'),
   debug = require('debug')('explorer'),
   path = require('path'),
-  { Api } = require('./lib/api'),
+  { api } = require('./lib/api'),
   favicon = require('static-favicon'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
-app.use('/api', Api().app);
+app.use('/api', api.app);
 app.use('/', routes);
 app.use('/ext/getmoneysupply', function(req,res){
   lib.get_supply(function(supply){

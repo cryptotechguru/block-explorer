@@ -18,7 +18,8 @@ var StatsSchema = new Schema({
   txouts: { type: Number, default: 0 },
   bogosize: { type: Number, default: 0 },
   hash_serialized_2: { type: String, lowercase: true },
-  disk_size: { type: Number, default: 0 }
+  disk_size: { type: Number, default: 0 },
+  last_price: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('stats', StatsSchema);
