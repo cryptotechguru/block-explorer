@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'),
   db = require('../lib/database'),
+  lib = require('../lib/explorer'),
   Block = require('../models/block'),
   Address = require('../models/address'),
   Richlist = require('../models/richlist'),
@@ -127,11 +128,7 @@ async function main() {
   })
   
   debug('Script launched with pid: ' + process.pid)
-  await promisify(mongoose.connect, settings.dbsettings.uri, settings.dbsettings.options).catch(err => {
-    console.log(err)
-    console.log(`Unable to connect to database: ${settings.dbsettings.uri}.`)
-    console.log(`With options: ${prettyPrint(settings.dbsettings.options, null, 2)}`)
-    console.log('Aborting')
+  await db.connect(settings.dbsettings).catch(err => {
     return exit(database)
   })
 
@@ -142,7 +139,7 @@ async function main() {
     }
 
     await db.updateStats(settings.coin)
-    const [ err, stats ] = await promisify(Stats.findOne.bind(Stats), { coin: settings.coin })
+    const stats = await promisify(db.get_stats, settings.coin)
 
     if (mode === 'reindex') {
       await promisify(Block.remove.bind(Block), {})
@@ -152,7 +149,7 @@ async function main() {
       debug('[reindex]: index cleared')
     }
 
-    await db.updateDb(stats, 0, stats.blocks, settings.update_timeout)
+    await db.updateDb(0, stats.blocks, settings.update_timeout)
 
     if (mode === 'check') {
       debug(`[check]: complete`)

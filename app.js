@@ -6,18 +6,18 @@ const express = require('express'),
   logger = require('morgan'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  request = require('request'),
   settings = require('./lib/settings'),
   routes = require('./routes/index'),
   lib = require('./lib/explorer'),
   db = require('./lib/database'),
   locale = require('./lib/locale'),
-  { promisify, requestp } = require('./lib/util')
+  { requestp } = require('./lib/util'),
+  info = require('./info')
 
-const app = express();
-
-const info = require('./info');
+const app = express()
 info(app)
+api.setCredentials(settings.wallet)
+api.setCachers(db.rpc)
 
   // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -81,6 +81,7 @@ app.use('/ext/getblocks/:start/:end', async function (req, res) {
   const start = parseInt(req.param('start'))
   const end = parseInt(req.param('end'))
   const reverse = req.query.reverse && req.query.reverse.toLowerCase() === 'true'
+  const flds = typeof req.query.flds === 'string' ? req.query.flds.split(',') : req.query.flds
 
   if (start > end) {
     res.send({ error: `End blockheight must be greater than or equal to the start blockheight.` })
@@ -91,12 +92,10 @@ app.use('/ext/getblocks/:start/:end', async function (req, res) {
   let heights = Array(end - start + 1).fill(undefined).map((_, i) => start + i)
   if (reverse) heights = heights.map(h => blockcount - h + 1)
 
-  const flds = req.query.flds == 'summary'
+  const searchFlds = flds && flds[0] === 'summary'
     ? { fulltx: 0, _id: 0 }
-    : req.query.flds == 'tx'
-      ? { fulltx: 1, _id: 0 }
-      : req.query.flds ? req.query.flds.reduce((acc, fld) => ({ ...acc, [fld]: 1 }), { _id: 0 }) : []
-  const [ err, blocks ] = await lib.getBlocksDb(heights, flds)
+    : flds ? flds.reduce((acc, fld) => ({ ...acc, [fld]: 1 }), { _id: 0 }) : []
+  const blocks = await db.getBlocks(heights, searchFlds)
   res.send({ data: { blockcount, blocks } })
 
   /*

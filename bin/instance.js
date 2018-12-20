@@ -12,9 +12,11 @@ app.set('port', process.env.PORT || settings.port)
 
 db.connect(settings.dbsettings).then(() =>
   promisify(db.get_stats, settings.coin)
-).then((stats) => {
+).then(stats => {
   app.locals.stats = stats
   const server = app.listen(app.get('port'), () => {
     debug('Express server listening on port ' + server.address().port)
   })
+}).catch(err => {
+  process.exit(1)
 })
