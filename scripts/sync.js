@@ -1,12 +1,10 @@
 const mongoose = require('mongoose'),
   db = require('../lib/database'),
-  lib = require('../lib/explorer'),
   Block = require('../models/block'),
   Address = require('../models/address'),
   Richlist = require('../models/richlist'),
-  Stats = require('../models/stats'),
   settings = require('../lib/settings'),
-  { promisify, prettyPrint, wait } = require('../lib/util'),
+  { promisify } = require('../lib/util'),
   fs = require('fs'),
   debug = require('debug')('explorer:sync')
 

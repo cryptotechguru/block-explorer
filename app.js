@@ -16,7 +16,6 @@ const express = require('express'),
 
 const app = express()
 info(app)
-api.setCredentials(settings.wallet)
 api.setCachers(db.rpc)
 
   // view engine setup
@@ -81,7 +80,7 @@ app.use('/ext/getblocks/:start/:end', async function (req, res) {
   const start = parseInt(req.param('start'))
   const end = parseInt(req.param('end'))
   const reverse = req.query.reverse && req.query.reverse.toLowerCase() === 'true'
-  const flds = typeof req.query.flds === 'string' ? req.query.flds.split(',') : req.query.flds
+  const flds = typeof req.query.flds === 'string' ? req.query.flds.split(',') : req.query.flds || []
 
   if (start > end) {
     res.send({ error: `End blockheight must be greater than or equal to the start blockheight.` })
@@ -92,60 +91,19 @@ app.use('/ext/getblocks/:start/:end', async function (req, res) {
   let heights = Array(end - start + 1).fill(undefined).map((_, i) => start + i)
   if (reverse) heights = heights.map(h => blockcount - h + 1)
 
-  const searchFlds = flds && flds[0] === 'summary'
+  const searchFlds = flds[0] === 'summary'
     ? { fulltx: 0, _id: 0 }
-    : flds ? flds.reduce((acc, fld) => ({ ...acc, [fld]: 1 }), { _id: 0 }) : []
-  const blocks = await db.getBlocks(heights, searchFlds)
-  res.send({ data: { blockcount, blocks } })
-
-  /*
-  const txReq = () => Promise.all(heights.map(i =>
-    db.getTxs({ height: i }).then(txs => {
-      // sorts transactions from newest to oldest
-      txs.sort((a, b) => {
-        if (a.blockindex !== b.blockindex) return a.blockindex > b.blockindex ? -1 : 1
-        if (a.timestamp !== b.timestamp) return a.timestamp > b.timestamp ? -1 : 1
-        return a._id > b._id ? -1 : 1
-      })
-      // since reverse means to go from newest to oldest
-      return reverse ? txs : txs.reverse()
-    })
-  ))
-  const infoReq = (blockcount) => Promise.all(heights.map(i =>
-    promisify(lib.get_blockhash, i)
-      .then(hash =>
-        hash.name === 'RpcError' ? null : lib.getBlock(hash, undefined, blockcount)
-      )
-  )).then(infos => strip ? infos.filter(info => info !== null) : infos)
-  const onErr = err => {
-    debug(err)
-    res.send({ error: `An error occurred: ${err}` })
+    : flds ? flds.reduce((acc, fld) => ({ ...acc, [fld]: 1 }), { _id: 0, height: 1 }) : []
+  let blocks = await db.getBlocks(heights, searchFlds)
+  if (!blocks) {
+    blocks = await Promise.all(heights.map(h => lib.getRawRpc('getblockhash', [ h ]).then(hash => lib.getRawRpc('getblock', [ hash ]))))
+  } else {
+    blocks = blocks.sort((a, b) => (reverse ? -1 : 1) * (a.height <= b.height ? -1 : 1))
   }
-
-  promisify(request, `${endpoint}/api/getblockcount`, { json: true }).then(([ err, resp, height ]) => {
-    if (reverse) heights = heights.map(h => height - h + 1)
-    return height
-  }).then(blockcount => {
-    if (req.query.flds == 'summary') {
-      infoReq(blockcount).then(infos => res.send({ data: { blockcount, blocks: infos } })).catch(onErr)
-    } else if (req.query.flds == 'tx') {
-      txReq().then(txs => res.send({ data: { blockcount, blocks: txs } })).catch(onErr)
-    } else {
-      Promise.all([ txReq(), infoReq(blockcount) ]).then(([ txs, infos ]) => {
-        res.send({
-          data: { blockcount, blocks: infos.map((info, i) => ({ ...info, tx: txs[i] })).map(block => {
-            if (req.query.flds && req.query.flds.length) {
-              Object.keys(block).forEach(key => {
-                if (!req.query.flds.includes(key)) delete block[key]
-              })
-            }
-            return block
-          }) }
-        })
-      }).catch(onErr)
-    }
-  }).catch(onErr)
-  */
+  blocks.forEach(block => {
+    if (!flds.includes('height') && flds[0] !== 'summary') delete block['height']
+  })
+  res.send({ data: { blockcount, blocks } })
 })
 
 app.use('/ext/connections', function(req,res){

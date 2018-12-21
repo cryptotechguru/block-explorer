@@ -16,7 +16,7 @@ block content
         serverSide: true,
         ajax: function (data, cb, settings) {
           $.ajax({
-            url: `/ext/getblocks/${data.start}/${data.start + data.length}?flds=summary&reverse=true&strip=true`
+            url: `/ext/getblocks/${data.start + 1}/${data.start + data.length}?flds=summary&reverse=true&strip=true`
           }).done((res) => {
             cb({
               draw: data.draw,

@@ -1,0 +1,820 @@
+
+> explorer@1.6.2-equibit start /home/eternali/equibit/explorer
+> node --stack-size=10000 ./bin/cluster
+
+- settings: host=169.53.165.114, port=18331
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:26:59 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:26:59 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:26:59 GMT express:router use / query
+Fri, 21 Dec 2018 16:26:59 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:26:59 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:26:59 GMT express:router:route new *
+Fri, 21 Dec 2018 16:26:59 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:26:59 GMT express:router:route get *
+Fri, 21 Dec 2018 16:26:59 GMT express:router:route get *
+- settings: host=169.53.165.114, port=18331
+- settings: host=169.53.165.114, port=18331
+- settings: host=169.53.165.114, port=18331
+- settings: host=169.53.165.114, port=18331
+- settings: host=169.53.165.114, port=18331
+- settings: host=169.53.165.114, port=18331
+- settings: host=169.53.165.114, port=18331
+- settings: host=169.53.165.114, port=18331
+- settings: host=169.53.165.114, port=18331
+
+
+
+Run again
+
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+ERROR: Fri, 21 Dec 2018 16:27:00 GMT explorer:sync args:: [ 'index', 'update' ]
+
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+ERROR: Fri, 21 Dec 2018 16:27:00 GMT explorer:sync - database=index, mode=update
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route post /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /version
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /version anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / favicon
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / logger
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / jsonParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / urlencodedParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / cookieParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / staticMiddleware
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:application .use app under /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /api fn
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / router
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getmoneysupply
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getmoneysupply anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getaddress/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getaddress/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getbalance/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getbalance/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getdistribution
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getdistribution anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getblocks/:start/:end
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getblocks/:start/:end anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/connections
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/connections anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route post /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /version
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /version anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / favicon
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / logger
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / jsonParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / urlencodedParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / cookieParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / staticMiddleware
+Fri, 21 Dec 2018 16:27:00 GMT express:application .use app under /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /api fn
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / router
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getmoneysupply
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getmoneysupply anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getaddress/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getaddress/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getbalance/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getbalance/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getdistribution
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getdistribution anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getblocks/:start/:end
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getblocks/:start/:end anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/connections
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/connections anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route post /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /ext/summary
+ERROR: Fri, 21 Dec 2018 16:27:00 GMT explorer:sync Script already running.
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /version
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /version anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / favicon
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / logger
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / jsonParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / urlencodedParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / cookieParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / staticMiddleware
+Fri, 21 Dec 2018 16:27:00 GMT express:application .use app under /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /api fn
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / router
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getmoneysupply
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getmoneysupply anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getaddress/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getaddress/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getbalance/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getbalance/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getdistribution
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getdistribution anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getblocks/:start/:end
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getblocks/:start/:end anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/connections
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/connections anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Process exited with code 0
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route post /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /version
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /version anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / favicon
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / logger
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / jsonParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / urlencodedParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / cookieParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / staticMiddleware
+Fri, 21 Dec 2018 16:27:00 GMT express:application .use app under /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /api fn
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / router
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getmoneysupply
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getmoneysupply anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getaddress/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getaddress/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getbalance/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getbalance/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getdistribution
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getdistribution anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getblocks/:start/:end
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getblocks/:start/:end anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/connections
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/connections anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route post /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /version
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /version anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / favicon
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / logger
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / jsonParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / urlencodedParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / cookieParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / staticMiddleware
+Fri, 21 Dec 2018 16:27:00 GMT express:application .use app under /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /api fn
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / router
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getmoneysupply
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getmoneysupply anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getaddress/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getaddress/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getbalance/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getbalance/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getdistribution
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getdistribution anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getblocks/:start/:end
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getblocks/:start/:end anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/connections
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/connections anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route post /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /version
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /version anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / favicon
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / logger
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / jsonParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / urlencodedParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / cookieParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / staticMiddleware
+Fri, 21 Dec 2018 16:27:00 GMT express:application .use app under /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /api fn
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / router
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getmoneysupply
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getmoneysupply anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getaddress/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getaddress/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getbalance/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getbalance/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getdistribution
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getdistribution anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getblocks/:start/:end
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getblocks/:start/:end anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/connections
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/connections anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route post /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /version
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /version anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / favicon
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / logger
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / jsonParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / urlencodedParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / cookieParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / staticMiddleware
+Fri, 21 Dec 2018 16:27:00 GMT express:application .use app under /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /api fn
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / router
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getmoneysupply
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getmoneysupply anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getaddress/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getaddress/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getbalance/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getbalance/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getdistribution
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getdistribution anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getblocks/:start/:end
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getblocks/:start/:end anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/connections
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/connections anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+
+
+Run again
+
+
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get *
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /info
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /markets/:market
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /richlist
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /movement
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /network
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /tx/:txid
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /block/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /address/:hash/:count
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route post /search
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /qr/:string
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:router:route get /ext/summary
+Fri, 21 Dec 2018 16:27:00 GMT express:application booting in development mode
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / query
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / expressInit
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /version
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /version anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / favicon
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / logger
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / jsonParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / urlencodedParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / cookieParser
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / staticMiddleware
+Fri, 21 Dec 2018 16:27:00 GMT express:application .use app under /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /api
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /api fn
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / router
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getmoneysupply
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getmoneysupply anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getaddress/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getaddress/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getbalance/:hash
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getbalance/:hash anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getdistribution
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getdistribution anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/getblocks/:start/:end
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/getblocks/:start/:end anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new /ext/connections
+Fri, 21 Dec 2018 16:27:00 GMT express:router use /ext/connections anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
+Fri, 21 Dec 2018 16:27:00 GMT express:router:layer new 
+Fri, 21 Dec 2018 16:27:00 GMT express:router use / anonymous
