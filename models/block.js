@@ -15,7 +15,7 @@ const TxSchema = new mongoose.Schema({
 })
 
 const BlockSchema = new mongoose.Schema({
-  hash: { type: String, lowercase: true, unique: true, index: true },
+  hash: { type: String, lowercase: true, unique: true },
   size: { type: Number },
   weight: { type: Number },
   height: { type: Number },
@@ -31,6 +31,6 @@ const BlockSchema = new mongoose.Schema({
   chainwork: { type: String, lowercase: true },
   previousblockhash: { type: String, lowercase: true },
   nextblockhash: { type: String, lowercase: true },
-}, { id: false })
+})
 
 module.exports = mongoose.model('Block', BlockSchema)

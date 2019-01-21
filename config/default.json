@@ -1,7 +1,7 @@
 {
   "dbsettings": {
     "uri": "mongodb://localhost:27017/blockchain-explorer",
-    "options": { "useNewUrlParser": true },
+    "options": { "useNewUrlParser": true, "autoIndex": false },
     "benchmark_uri": "mongodb://localhost:27017/explorer-benchmark",
     "benchmark_options": { "useNewUrlParser": true }
   },
