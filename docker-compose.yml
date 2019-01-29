@@ -1,0 +1,34 @@
+version: "3.1"
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    # build: db/.
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./db/data:/db/data
+    # env_file:
+    #   - ./db/qa.env
+  tmpMongo:
+    image: mongo:latest
+    container_name: tmpMongo
+    links:
+      - mongo:mongo
+    command: mongo --host mongo --eval  "db.getSiblingDB('explorerdb').createUser({user:'iquidus', pwd:'3xp!0reR', roles:[{role:'readWrite',db:'explorerdb'}]});"
+    depends_on:
+      - mongo
+  test-explorer:
+    container_name: test-explorer
+    restart: always
+    build: .
+    ports:
+      - "8080:3001"
+    volumes:
+      - ./logs:/app/logs
+    env_file:
+      - qa.env
+    links:
+      - mongo:mongo
+    depends_on:
+      - tmpMongo
