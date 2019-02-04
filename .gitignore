@@ -30,3 +30,5 @@ settings.json
 *.env
 .vscode
 
+# database persistence stuff
+db/data
