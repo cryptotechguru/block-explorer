@@ -14,7 +14,7 @@ services:
 
   test-explorer:
     container_name: test-explorer
-    build: .
+    # build: .
     image: eternali/test-explorer
     restart: always
     # ports:

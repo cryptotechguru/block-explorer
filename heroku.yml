@@ -1,0 +1,5 @@
+build:
+  docker:
+    explorer: Dockerfile
+    run: --network="host" --env-file="qa.env" explorer
+    
