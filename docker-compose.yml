@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3"
 services:
   mongo:
     container_name: mongo
@@ -15,12 +15,15 @@ services:
   test-explorer:
     container_name: test-explorer
     build: .
+    image: eternali/test-explorer
     restart: always
-    ports:
-      - "8080:3001"
+    # ports:
+    #   - "8080:3001"
+    network_mode: "host"
     # volumes:
-    #   - ./logs:/app/logs
+      # - ./tmp:/app/tmp
+      # - ./logs:/app/logs
     env_file:
       - qa.env
-    links:
-      - mongo:mongo
+    # links:
+    #   - mongo:mongo
