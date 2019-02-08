@@ -1,5 +1,9 @@
 build:
   docker:
     explorer: Dockerfile
-    run: --network="host" --env-file="qa.env" explorer
+    mongo: db/Dockerfile
+run:
+  explorer: npm start
+  mongo:
+    image: mongo
     

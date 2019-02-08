@@ -76,7 +76,8 @@ app.use('/ext/getdistribution', function(req,res){
 });
 
 app.use('/ext/getblocks/:start/:end', async function (req, res) {
-  const endpoint = settings.address || `http://${req.headers.host}`
+  console.log(req.por)
+  const endpoint = settings.endpoint || `http://${req.headers.host}`
   const start = parseInt(req.param('start'))
   const end = parseInt(req.param('end'))
   const reverse = req.query.reverse && req.query.reverse.toLowerCase() === 'true'

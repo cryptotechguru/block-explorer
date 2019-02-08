@@ -120,7 +120,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/info', function(req, res) {
-  res.render('info', { active: 'info', address: settings.address || `http://${req.headers.host}`, hashes: settings.api });
+  res.render('info', { active: 'info', address: settings.endpoint || `http://${req.headers.host}`, hashes: settings.api });
 });
 
 router.get('/markets/:market', function(req, res) {

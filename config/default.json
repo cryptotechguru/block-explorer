@@ -16,7 +16,7 @@
     }
   },
   "title": "Equibit",
-  "address": "http://127.0.0.1:3001",
+  "endpoint": "",
   "coin": "Equibit",
   "symbol": "EQB",
   "logo": "/images/logo.png",

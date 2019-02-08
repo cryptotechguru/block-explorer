@@ -14,6 +14,7 @@ db.connect(settings.dbsettings).then(() =>
   promisify(db.get_stats, settings.coin)
 ).then(stats => {
   app.locals.stats = stats
+  app.set('port', settings.port)
   const server = app.listen(app.get('port'), () => {
     debug('Express server listening on port ' + server.address().port)
   })

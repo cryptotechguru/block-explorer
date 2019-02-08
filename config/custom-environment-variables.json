@@ -1,6 +1,6 @@
 {
   "dbsettings": {
-    "uri": "MONGO_DB_URI"
+    "uri": "MONGODB_URI"
   },
   "wallet": {
     "url": "EQUIBIT_CORE_URL",
@@ -10,5 +10,6 @@
   "index": {
     "index_mode": "INDEX_MODE"
   },
-  "address": "API_ENDPOINT"
+  "endpoint": "API_ENDPOINT",
+  "port": "PORT"
 }
