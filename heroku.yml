@@ -1,9 +1,0 @@
-build:
-  docker:
-    explorer: Dockerfile
-    mongo: db/Dockerfile
-run:
-  explorer: npm start
-  mongo:
-    image: mongo
-    

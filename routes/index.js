@@ -9,15 +9,29 @@ var express = require('express')
 function route_get_block(res, blockhash) {
   lib.getBlock(blockhash, function (block) {
     const safeRender = list => list && list.length > 0 && list.filter(l => l).length ? list : []
+    const renderBase = {
+      active: 'block',
+      block,
+      confirmations: settings.confirmations,
+      txs: []
+    }
     if (block) {
       if (blockhash === settings.genesis_block) {
-        res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: 'GENESIS'});
+        res.render('block', { ...renderBase, txs: 'GENESIS' });
       } else {
         db.getTxs({ hash: blockhash }).then(txs => {
           if (txs && txs.length > 0) {
-            res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: safeRender(txs) });
+            res.render('block', { ...renderBase, txs: safeRender(txs) });
           } else {
-            route_get_index(res, 'Block not found: ' + blockhash);
+            // Promise.all can't be used because the requests must be sequential
+            // to avoid bitcoin-core's work queue depth to be exceeded.
+            block.tx.map(tx =>
+              async (fetched) => [ ...fetched, await lib.getRawRpc('getrawtransaction', [ tx, 1 ]) ]
+            ).reduce((p, fn) =>
+              p.then(fn), Promise.resolve([])
+            ).then(rawtxs => {
+              res.render('block', { ...renderBase, txs: rawtxs.map(tx => ({ ...tx, amount: parseFloat(tx.amount) })) })
+            })
           }
         });
       }
