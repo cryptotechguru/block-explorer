@@ -25,12 +25,17 @@ function route_get_block(res, blockhash) {
           } else {
             // Promise.all can't be used because the requests must be sequential
             // to avoid bitcoin-core's work queue depth to be exceeded.
-            block.tx.map(tx =>
-              async (fetched) => [ ...fetched, await lib.getRawRpc('getrawtransaction', [ tx, 1 ]) ]
-            ).reduce((p, fn) =>
+            block.tx.map(tx => async (fetched) => [
+              ...fetched,
+              await lib.getRawRpc('getrawtransaction', [ tx, 1 ])
+                .then(tx => db.parseTx(block, tx))
+            ]).reduce((p, fn) =>
               p.then(fn), Promise.resolve([])
             ).then(rawtxs => {
-              res.render('block', { ...renderBase, txs: rawtxs.map(tx => ({ ...tx, amount: parseFloat(tx.amount) })) })
+              res.render('block', {
+                ...renderBase,
+                txs: safeRender(rawtxs)
+              })
             })
           }
         });
