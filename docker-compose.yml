@@ -17,12 +17,7 @@ services:
     # build: .
     image: eternali/test-explorer
     restart: always
-    # ports:
-    #   - "8080:3001"
     network_mode: "host"
-    # volumes:
-      # - ./tmp:/app/tmp
-      # - ./logs:/app/logs
     env_file:
       - qa.env
     # links:
