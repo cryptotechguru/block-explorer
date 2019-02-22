@@ -1,3 +1,4 @@
+# FROM mhart/alpine-node:10.15.0
 FROM node:10.15.0
 
 WORKDIR /app
@@ -8,6 +9,5 @@ RUN npm install
 COPY . ./
 
 EXPOSE 3001
-# EXPOSE 27017
 
 CMD [ "npm", "start" ]

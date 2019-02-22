@@ -14,11 +14,11 @@ services:
 
   test-explorer:
     container_name: test-explorer
-    # build: .
-    image: eternali/test-explorer
+    build: .
+    # image: eternali/test-explorer
     restart: always
     network_mode: "host"
     env_file:
-      - qa.env
+      - qa-docker.env
     # links:
     #   - mongo:mongo
